@@ -1,0 +1,42 @@
+[
+  {
+    "id": "kfw-261",
+    "name": "KfW Bundesförderung Effizienzhaus",
+    "betrag": "bis zu €150.000",
+    "beschreibung": "Kredit für energetische Sanierung zum Effizienzhaus-Standard",
+    "bedingungen": ["eigentuemer"],
+    "url": "https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestandsimmobilien/Finanzierungsangebote/Bundesf%C3%B6rderung-f%C3%BCr-effiziente-Geb%C3%A4ude-Kredit-(261)/"
+  },
+  {
+    "id": "bafa-beg",
+    "name": "BAFA Bundesförderung Einzelmaßnahmen",
+    "betrag": "15–20% der Investitionskosten",
+    "beschreibung": "Zuschuss für Dämmung, Fenster, Heizungsoptimierung",
+    "bedingungen": ["eigentuemer"],
+    "url": "https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/Bundesfoerderung_Einzelmassnahmen/bundesfoerderung_einzelmassnahmen_node.html"
+  },
+  {
+    "id": "kfw-270",
+    "name": "KfW Erneuerbare Energien Solar",
+    "betrag": "bis zu €50 Mio. Kredit",
+    "beschreibung": "Günstiger Kredit für Photovoltaik-Anlage",
+    "bedingungen": ["eigentuemer_haus"],
+    "url": "https://www.kfw.de/inlandsfoerderung/Privatpersonen/Neubau/Finanzierungsangebote/Erneuerbare-Energien-–-Standard-(270)/"
+  },
+  {
+    "id": "stromanbieter-wechsel",
+    "name": "Ökostrom-Wechselbonus",
+    "betrag": "€50–€200 Wechselbonus",
+    "beschreibung": "Viele Ökostromanbieter zahlen Wechselboni und sind günstiger als Grundversorger",
+    "bedingungen": ["mieter", "eigentuemer"],
+    "url": "https://www.verivox.de/strom/"
+  },
+  {
+    "id": "kfw-waermepumpe",
+    "name": "BEG Wärmepumpe Förderung",
+    "betrag": "bis zu 70% der Kosten",
+    "beschreibung": "Kombizuschuss BAFA + KfW für Wärmepumpen-Installation",
+    "bedingungen": ["eigentuemer"],
+    "url": "https://www.bafa.de"
+  }
+]

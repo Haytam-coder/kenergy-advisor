@@ -1,0 +1,14 @@
+{
+  "SFH": {
+    "vor1970": { "heizenergiebedarfKwh": 230, "daemmzustand": "ungedämmt", "energieeffizienzklasse": "H", "uWertWand": 1.4, "uWertDach": 0.9, "uWertFenster": 2.8 },
+    "1970-1990": { "heizenergiebedarfKwh": 180, "daemmzustand": "gering gedämmt", "energieeffizienzklasse": "F", "uWertWand": 0.9, "uWertDach": 0.5, "uWertFenster": 2.6 },
+    "1990-2010": { "heizenergiebedarfKwh": 120, "daemmzustand": "mittel gedämmt", "energieeffizienzklasse": "D", "uWertWand": 0.5, "uWertDach": 0.3, "uWertFenster": 1.8 },
+    "nach2010":  { "heizenergiebedarfKwh": 60,  "daemmzustand": "gut gedämmt",   "energieeffizienzklasse": "B", "uWertWand": 0.25, "uWertDach": 0.2, "uWertFenster": 1.1 }
+  },
+  "MFH": {
+    "vor1970": { "heizenergiebedarfKwh": 210, "daemmzustand": "ungedämmt", "energieeffizienzklasse": "G", "uWertWand": 1.3, "uWertDach": 0.8, "uWertFenster": 2.8 },
+    "1970-1990": { "heizenergiebedarfKwh": 165, "daemmzustand": "gering gedämmt", "energieeffizienzklasse": "E", "uWertWand": 0.8, "uWertDach": 0.45, "uWertFenster": 2.5 },
+    "1990-2010": { "heizenergiebedarfKwh": 110, "daemmzustand": "mittel gedämmt", "energieeffizienzklasse": "C", "uWertWand": 0.45, "uWertDach": 0.25, "uWertFenster": 1.6 },
+    "nach2010":  { "heizenergiebedarfKwh": 55,  "daemmzustand": "gut gedämmt",   "energieeffizienzklasse": "A", "uWertWand": 0.22, "uWertDach": 0.18, "uWertFenster": 1.0 }
+  }
+}
