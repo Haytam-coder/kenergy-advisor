@@ -76,17 +76,6 @@ body {
   box-shadow: 0 0 36px rgba(220, 100, 24, 0.2);
 }
 
-[data-theme="light"] .btn-glass {
-  background: rgba(255, 255, 255, 0.55);
-  border-color: rgba(0, 0, 0, 0.12);
-  backdrop-filter: blur(8px);
-}
-
-[data-theme="light"] .btn-glass:hover {
-  background: rgba(255, 255, 255, 0.8);
-  border-color: rgba(222, 104, 24, 0.4);
-  box-shadow: 0 4px 24px rgba(232, 64, 48, 0.15);
-}
 
 /* ── Scroll Fade In ── */
 .fade-in {
@@ -153,8 +142,3 @@ body {
   100% { transform: translate(0px, 0px) scale(1); }
 }
 
-/* ── Light Mode: Tailwind arbitrary-value overrides ── */
-[data-theme="light"] .text-\[\#8a7868\] { color: var(--muted); }
-[data-theme="light"] .border-white\/10 { border-color: rgba(0, 0, 0, 0.1) !important; }
-[data-theme="light"] .bg-white\/4 { background-color: rgba(255, 255, 255, 0.5) !important; }
-[data-theme="light"] .hover\:text-white:hover { color: var(--text) !important; }
