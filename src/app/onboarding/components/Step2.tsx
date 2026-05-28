@@ -40,7 +40,7 @@ export default function Step2({ data, onChange, onNext, onBack }: Step2Props) {
             max={new Date().getFullYear()}
             placeholder="z. B. 1968"
             value={data.baujahr ?? ''}
-            onChange={(e) => onChange({ baujahr: e.target.value as UserProfile['baujahr'] })}
+            onChange={(e) => onChange({ baujahr: parseInt(e.target.value) || undefined })}
             style={inputSt}
             onFocus={(e) => { e.target.style.borderColor = 'rgba(222,104,24,0.5)'; }}
             onBlur={(e) => { e.target.style.borderColor = 'var(--input-border)'; }}
