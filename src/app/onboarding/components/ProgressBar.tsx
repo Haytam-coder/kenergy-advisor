@@ -17,7 +17,7 @@ export default function ProgressBar({ currentStep, totalSteps }: ProgressBarProp
           {percent} %
         </span>
       </div>
-      <div style={{ width: '100%', height: '1px', backgroundColor: 'rgba(255,255,255,0.08)' }}>
+      <div style={{ width: '100%', height: '1px', backgroundColor: 'var(--card-border)' }}>
         <div style={{ width: `${percent}%`, height: '1px', backgroundColor: '#de6818', transition: 'width 0.5s ease' }} />
       </div>
     </div>

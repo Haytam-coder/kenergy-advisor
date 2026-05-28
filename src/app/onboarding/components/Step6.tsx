@@ -52,7 +52,7 @@ export default function Step6({ data, onChange, onSubmit, onBack, submitting }: 
 
       <div className="mt-8 flex gap-3">
         <button onClick={onBack} disabled={submitting} className="py-3 px-6 rounded-xl transition-colors disabled:opacity-30"
-          style={{ fontFamily: 'var(--font-syne-var)', fontSize: '13px', fontWeight: 600, border: '1px solid rgba(255,255,255,0.12)', color: '#8a7868' }}>
+          style={{ fontFamily: 'var(--font-syne-var)', fontSize: '13px', fontWeight: 600, border: '1px solid var(--divider)', color: 'var(--muted)' }}>
           ← Zurück
         </button>
         <button onClick={onSubmit} disabled={!canProceed || submitting}

@@ -15,9 +15,9 @@ const lbl = { fontFamily: 'var(--font-syne-var)', fontSize: '9px', letterSpacing
 
 function InfoCard({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
   return (
-    <div style={{ padding: '16px', borderRadius: '12px', border: highlight ? '1px solid rgba(222,104,24,0.35)' : '1px solid rgba(255,255,255,0.08)', backgroundColor: highlight ? 'rgba(222,104,24,0.08)' : 'rgba(255,255,255,0.03)' }}>
-      <p style={{ fontFamily: 'var(--font-syne-var)', fontSize: '9px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: '6px' }}>{label}</p>
-      <p style={{ fontFamily: 'var(--font-syne-var)', fontWeight: 600, fontSize: '13px', color: highlight ? '#f0ac24' : '#ffffff' }}>{value}</p>
+    <div style={{ padding: '16px', borderRadius: '12px', border: highlight ? '1px solid rgba(222,104,24,0.35)' : '1px solid var(--card-border)', backgroundColor: highlight ? 'rgba(222,104,24,0.08)' : 'var(--card-bg)' }}>
+      <p style={{ fontFamily: 'var(--font-syne-var)', fontSize: '9px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--label-color)', marginBottom: '6px' }}>{label}</p>
+      <p style={{ fontFamily: 'var(--font-syne-var)', fontWeight: 600, fontSize: '13px', color: highlight ? '#f0ac24' : 'var(--text)' }}>{value}</p>
     </div>
   );
 }
@@ -53,7 +53,7 @@ export default function Step3({ data, onChange, onNext, onBack }: Step3Props) {
 
       <div className="mt-8 flex gap-3">
         <button onClick={onBack} className="py-3 px-6 rounded-xl transition-colors"
-          style={{ fontFamily: 'var(--font-syne-var)', fontSize: '13px', fontWeight: 600, border: '1px solid rgba(255,255,255,0.12)', color: '#8a7868' }}>
+          style={{ fontFamily: 'var(--font-syne-var)', fontSize: '13px', fontWeight: 600, border: '1px solid var(--divider)', color: 'var(--muted)' }}>
           ← Zurück
         </button>
         <button onClick={onNext} disabled={!canProceed}

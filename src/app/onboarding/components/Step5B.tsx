@@ -42,7 +42,7 @@ export default function Step5B({ data, onChange, onNext, onBack }: Props) {
         </div>
       </div>
       <div className="mt-8 flex gap-3">
-        <button onClick={onBack} className="py-3 px-6 rounded-xl transition-colors" style={{ fontFamily: 'var(--font-syne-var)', fontSize: '13px', fontWeight: 600, border: '1px solid rgba(255,255,255,0.12)', color: '#8a7868' }}>← Zurück</button>
+        <button onClick={onBack} className="py-3 px-6 rounded-xl transition-colors" style={{ fontFamily: 'var(--font-syne-var)', fontSize: '13px', fontWeight: 600, border: '1px solid var(--divider)', color: 'var(--muted)' }}>← Zurück</button>
         <button onClick={onNext} disabled={!canProceed} className="flex-1 py-3 px-6 rounded-xl font-semibold transition-all disabled:opacity-30 disabled:cursor-not-allowed" style={{ fontFamily: 'var(--font-syne-var)', fontSize: '13px', backgroundColor: '#de6818', color: 'white' }}>Weiter →</button>
       </div>
     </div>

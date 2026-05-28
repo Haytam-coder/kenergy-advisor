@@ -11,7 +11,7 @@ interface Step2Props {
 }
 
 const lbl = { fontFamily: 'var(--font-syne-var)', fontSize: '9px', letterSpacing: '0.24em', textTransform: 'uppercase' as const, color: 'var(--label-color)', display: 'block', marginBottom: '12px' };
-const inputSt: React.CSSProperties = { fontFamily: 'var(--font-syne-var)', fontSize: '14px', color: 'var(--text)', backgroundColor: 'var(--input-bg)', border: '1px solid var(--input-border)', borderRadius: '12px', padding: '12px 16px', width: '100%', outline: 'none' };
+const inputSt: React.CSSProperties = { fontFamily: 'var(--font-syne-var)', fontSize: '14px', color: 'var(--text)', backgroundColor: 'var(--input-bg)', border: '1px solid var(--input-border)', borderRadius: '12px', padding: '12px 16px', width: '100%', outline: 'none', transition: 'border-color 0.2s' };
 
 export default function Step2({ data, onChange, onNext, onBack }: Step2Props) {
   const baujahrValid = data.baujahr && Number(data.baujahr) >= 1800 && Number(data.baujahr) <= new Date().getFullYear();
