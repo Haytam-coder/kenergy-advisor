@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import Anthropic from '@anthropic-ai/sdk';
+import OpenAI from 'openai';
 import { UserProfile, ChatMessage } from '@/lib/types';
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 function getSystemPrompt(profile: UserProfile): string {
   return `Du bist ein freundlicher, kompetenter KI-Energieberater für ${profile.userType === 'mieter' ? 'Mieter' : 'Eigentümer'} in Deutschland.
@@ -33,19 +33,19 @@ export async function POST(req: NextRequest) {
   try {
     const { message, history, profile }: { message: string; history: ChatMessage[]; profile: UserProfile } = await req.json();
 
-    const messages = [
+    const messages: OpenAI.Chat.ChatCompletionMessageParam[] = [
+      { role: 'system', content: getSystemPrompt(profile) },
       ...history.map((m) => ({ role: m.role as 'user' | 'assistant', content: m.content })),
-      { role: 'user' as const, content: message },
+      { role: 'user', content: message },
     ];
 
-    const response = await anthropic.messages.create({
-      model: 'claude-haiku-4-5-20251001',
+    const response = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
       max_tokens: 1024,
-      system: getSystemPrompt(profile),
       messages,
     });
 
-    const text = response.content[0].type === 'text' ? response.content[0].text : '';
+    const text = response.choices[0].message.content ?? '';
     return NextResponse.json({ reply: text });
   } catch (error) {
     console.error('chat error:', error);

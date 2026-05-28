@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import Anthropic from '@anthropic-ai/sdk';
+import OpenAI from 'openai';
 import { UserProfile } from '@/lib/types';
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export async function POST(req: NextRequest) {
   try {
@@ -63,17 +63,15 @@ Wichtige Regeln:
 - Mindestens 5, maximal 10 Maßnahmen
 - Antworte NUR mit dem JSON-Objekt, kein zusätzlicher Text`;
 
-    const response = await anthropic.messages.create({
-      model: 'claude-sonnet-4-5',
+    const response = await openai.chat.completions.create({
+      model: 'gpt-4o',
       max_tokens: 4096,
+      response_format: { type: 'json_object' },
       messages: [{ role: 'user', content: prompt }],
     });
 
-    const text = response.content[0].type === 'text' ? response.content[0].text : '{}';
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) throw new Error('Keine JSON-Antwort erhalten');
-
-    const result = JSON.parse(jsonMatch[0]);
+    const text = response.choices[0].message.content ?? '{}';
+    const result = JSON.parse(text);
     return NextResponse.json(result);
   } catch (error) {
     console.error('analyze error:', error);

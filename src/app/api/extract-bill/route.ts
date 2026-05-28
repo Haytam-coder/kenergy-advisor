@@ -1,26 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
-import Anthropic from '@anthropic-ai/sdk';
+import OpenAI from 'openai';
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 export async function POST(req: NextRequest) {
   try {
     const { imageBase64, mediaType } = await req.json();
+    const mime = mediaType ?? 'image/jpeg';
 
-    const response = await anthropic.messages.create({
-      model: 'claude-sonnet-4-5',
+    const response = await openai.chat.completions.create({
+      model: 'gpt-4o',
       max_tokens: 500,
+      response_format: { type: 'json_object' },
       messages: [
         {
           role: 'user',
           content: [
             {
-              type: 'image',
-              source: {
-                type: 'base64',
-                media_type: mediaType ?? 'image/jpeg',
-                data: imageBase64,
-              },
+              type: 'image_url',
+              image_url: { url: `data:${mime};base64,${imageBase64}` },
             },
             {
               type: 'text',
@@ -31,10 +29,8 @@ export async function POST(req: NextRequest) {
       ],
     });
 
-    const text = response.content[0].type === 'text' ? response.content[0].text : '{"kwh": null, "kosten": null}';
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
-    const result = jsonMatch ? JSON.parse(jsonMatch[0]) : { kwh: null, kosten: null };
-
+    const text = response.choices[0].message.content ?? '{"kwh": null, "kosten": null}';
+    const result = JSON.parse(text);
     return NextResponse.json(result);
   } catch (error) {
     console.error('extract-bill error:', error);
