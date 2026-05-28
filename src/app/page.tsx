@@ -37,58 +37,69 @@ export default function LandingPage() {
 
       {/* ── Orb Layer ── */}
       <div className="orb-layer" style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
-        {/* o1 – sehr groß, dunkel-orange, oben rechts */}
+        {/* o1 – sehr groß, dunkel-orange, Mitte */}
         <div style={{
           position: 'absolute',
           width: '1060px', height: '1060px',
-          right: '-240px', top: '-240px',
+          left: 'calc(50% - 530px)', top: 'calc(50% - 530px)',
           borderRadius: '50%',
           background: 'radial-gradient(circle, #c04400 0%, transparent 68%)',
           opacity: 0.55,
+          willChange: 'transform',
+          animation: 'ambientDrift1 4s ease-in-out infinite',
+          animationDelay: '-1s',
         }} />
-        {/* o2 – groß, helles Orange */}
+        {/* o2 – groß, helles Orange, Mitte */}
         <div style={{
           position: 'absolute',
           width: '680px', height: '680px',
-          right: '40px', top: '40px',
+          left: 'calc(50% - 340px)', top: 'calc(50% - 340px)',
           borderRadius: '50%',
           background: 'radial-gradient(circle, #e06818 0%, transparent 68%)',
           opacity: 0.38,
           filter: 'blur(20px)',
+          willChange: 'transform',
+          animation: 'ambientDrift2 5s ease-in-out infinite',
+          animationDelay: '-2s',
         }} />
-        {/* o3 – mittel, Gold, Kern */}
+        {/* o3 – mittel, Gold, Mitte */}
         <div style={{
           position: 'absolute',
           width: '380px', height: '380px',
-          right: '220px', top: '180px',
+          left: 'calc(50% - 190px)', top: 'calc(50% - 190px)',
           borderRadius: '50%',
           background: 'radial-gradient(circle, #f5b424 0%, transparent 68%)',
           opacity: 0.28,
           filter: 'blur(10px)',
+          willChange: 'transform',
+          animation: 'ambientDrift3 3s ease-in-out infinite',
+          animationDelay: '-1s',
         }} />
       </div>
 
       {/* ── Light Mode Orbs (Daylight Glow) ── */}
       <div className="orb-layer-light" style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
-        {/* Orb 1 – sehr groß, warmes Orange, oben rechts */}
+        {/* Orb 1 – sehr groß, warmes Orange, Mitte */}
         <div style={{
           position: 'absolute',
           width: '1060px', height: '1060px',
-          right: '-240px', top: '-240px',
+          left: 'calc(50% - 530px)', top: 'calc(50% - 530px)',
           borderRadius: '50%',
           background: 'radial-gradient(circle, rgba(255,105,25,0.58) 0%, rgba(255,105,25,0) 68%)',
           willChange: 'transform',
-          animation: 'orbFloat1 16s ease-in-out infinite',
+          animation: 'ambientDrift1 5s ease-in-out infinite',
+          animationDelay: '-1s',
         }} />
-        {/* Orb 2 – mittel, goldenes Orange, Kern */}
+        {/* Orb 2 – mittel, goldenes Orange, Mitte */}
         <div style={{
           position: 'absolute',
           width: '480px', height: '480px',
-          right: '60px', top: '80px',
+          left: 'calc(50% - 240px)', top: 'calc(50% - 240px)',
           borderRadius: '50%',
           background: 'radial-gradient(circle, rgba(255,158,55,0.38) 0%, rgba(255,158,55,0) 68%)',
           willChange: 'transform',
-          animation: 'orbFloat3 12s ease-in-out infinite',
+          animation: 'ambientDrift4 4s ease-in-out infinite',
+          animationDelay: '-1s',
         }} />
       </div>
 
