@@ -10,15 +10,9 @@ interface Step2Props {
   onBack: () => void;
 }
 
-const baujahrOptions: { label: string; value: UserProfile['baujahr'] }[] = [
-  { label: 'Vor 1970', value: 'vor1970' },
-  { label: '1970–1990', value: '1970-1990' },
-  { label: '1990–2010', value: '1990-2010' },
-  { label: 'Nach 2010', value: 'nach2010' },
-];
-
 export default function Step2({ data, onChange, onNext, onBack }: Step2Props) {
-  const canProceed = data.plz && data.plz.length === 5 && data.baujahr && data.wohnflaeche && data.personen;
+  const baujahrValid = data.baujahr && data.baujahr >= 1800 && data.baujahr <= new Date().getFullYear();
+  const canProceed = data.plz && data.plz.length === 5 && baujahrValid && data.wohnflaeche && data.personen;
 
   return (
     <div>
@@ -42,23 +36,17 @@ export default function Step2({ data, onChange, onNext, onBack }: Step2Props) {
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-3">Baujahr des Gebäudes</label>
-          <div className="grid grid-cols-2 gap-3">
-            {baujahrOptions.map((opt) => (
-              <button
-                key={opt.value}
-                onClick={() => onChange({ baujahr: opt.value })}
-                className={clsx(
-                  'py-3 px-4 border-2 rounded-xl font-medium transition-all',
-                  data.baujahr === opt.value
-                    ? 'border-green-500 bg-green-50 text-green-700'
-                    : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
-                )}
-              >
-                {opt.label}
-              </button>
-            ))}
-          </div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">Baujahr des Gebäudes</label>
+          <input
+            type="number"
+            min={1800}
+            max={new Date().getFullYear()}
+            placeholder="z. B. 1968"
+            value={data.baujahr ?? ''}
+            onChange={(e) => onChange({ baujahr: parseInt(e.target.value) || undefined })}
+            className="w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-400"
+          />
+          <p className="text-xs text-gray-400 mt-1">Ungefähres Baujahr – präzise Zuordnung zum TABULA-Archetyp</p>
         </div>
 
         <div>

@@ -6,7 +6,7 @@ export interface UserProfile {
 
   // Seite 2
   plz: string;
-  baujahr: 'vor1970' | '1970-1990' | '1990-2010' | 'nach2010';
+  baujahr: number;
   wohnflaeche: number;
   personen: 1 | 2 | 3 | 4;
 
@@ -78,6 +78,10 @@ export interface ChatMessage {
 }
 
 export interface TabulaData {
+  code: string;
+  year1: number | null;
+  year2: number | null;
+  referenzflaeche_m2: number;
   heizenergiebedarfKwh: number;
   daemmzustand: string;
   energieeffizienzklasse: string;
