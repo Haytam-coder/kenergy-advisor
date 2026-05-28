@@ -114,6 +114,37 @@ export default function OnboardingPage() {
         }} />
       </div>
 
+      {/* Light Mode Orbs */}
+      <div className="orb-layer-light" style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
+        <div style={{
+          position: 'absolute',
+          width: '820px', height: '820px',
+          right: '-200px', top: '-200px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(232,64,48,0.55) 0%, rgba(232,64,48,0) 68%)',
+          willChange: 'transform',
+          animation: 'orbFloat1 16s ease-in-out infinite',
+        }} />
+        <div style={{
+          position: 'absolute',
+          width: '520px', height: '520px',
+          left: '-100px', bottom: '-100px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(240,96,64,0.40) 0%, rgba(240,96,64,0) 68%)',
+          willChange: 'transform',
+          animation: 'orbFloat2 20s ease-in-out infinite',
+        }} />
+        <div style={{
+          position: 'absolute',
+          width: '300px', height: '300px',
+          right: '90px', top: '80px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(248,144,106,0.35) 0%, rgba(248,144,106,0) 68%)',
+          willChange: 'transform',
+          animation: 'orbFloat3 12s ease-in-out infinite',
+        }} />
+      </div>
+
       {/* Navigation */}
       <nav style={{ position: 'relative', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '24px 32px' }}>
         <Link href="/" style={{ fontFamily: 'var(--font-syne-var)', fontWeight: 600, letterSpacing: '0.22em', fontSize: '12px', color: 'var(--text)', textDecoration: 'none', textTransform: 'uppercase' }}>
