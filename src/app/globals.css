@@ -1,26 +1,101 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-brand: #de6818;
+  --color-brand-dark: #b84200;
+  --color-gold: #f0ac24;
+  --font-syne: var(--font-syne-var);
+  --font-cormorant: var(--font-cormorant-var);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Theme Tokens ── */
+:root {
+  --bg: #070500;
+  --text: #ffffff;
+  --muted: #b8a898;
+  --label-color: rgba(255, 255, 255, 0.45);
+  --card-bg: rgba(255, 255, 255, 0.04);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --divider: rgba(255, 255, 255, 0.12);
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-border: rgba(255, 255, 255, 0.1);
+  --subtle: rgba(255, 255, 255, 0.2);
 }
+
+[data-theme="light"] {
+  --bg: #f0ebe4;
+  --text: #1a1614;
+  --muted: #6b5d52;
+  --label-color: rgba(0, 0, 0, 0.45);
+  --card-bg: rgba(0, 0, 0, 0.04);
+  --card-border: rgba(0, 0, 0, 0.1);
+  --divider: rgba(0, 0, 0, 0.12);
+  --input-bg: rgba(0, 0, 0, 0.04);
+  --input-border: rgba(0, 0, 0, 0.12);
+  --subtle: rgba(0, 0, 0, 0.18);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-syne-var), 'Syne', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+/* ── Glass Card ── */
+.card-glass {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+}
+
+/* ── Glass Button ── */
+.btn-glass {
+  display: inline-flex;
+  align-items: center;
+  background: var(--card-bg);
+  border: 1px solid var(--divider);
+  border-radius: 100px;
+  color: var(--text);
+  padding: 14px 32px;
+  font-size: 14px;
+  font-family: var(--font-syne-var), 'Syne', sans-serif;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.btn-glass:hover {
+  background: rgba(240, 172, 36, 0.1);
+  border-color: rgba(240, 172, 36, 0.38);
+  box-shadow: 0 0 36px rgba(220, 100, 24, 0.2);
+}
+
+/* ── Scroll Fade In ── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Light Mode ── */
+[data-theme="light"] .orb-layer { display: none; }
+
+[data-theme="light"] body {
+  background-image: radial-gradient(ellipse at 90% 0%, rgba(222, 104, 24, 0.08) 0%, transparent 55%);
+}
+
+/* Tailwind arbitrary-value overrides for light mode */
+[data-theme="light"] .text-\[\#8a7868\] { color: var(--muted); }
+[data-theme="light"] .border-white\/10 { border-color: rgba(0, 0, 0, 0.1) !important; }
+[data-theme="light"] .bg-white\/4 { background-color: rgba(0, 0, 0, 0.04) !important; }
+[data-theme="light"] .hover\:text-white:hover { color: var(--text) !important; }

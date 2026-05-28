@@ -10,61 +10,41 @@ interface Step3Props {
   onBack: () => void;
 }
 
-const baujahrLabel: Record<string, string> = {
-  vor1970: 'vor 1970',
-  '1970-1990': '1970–1990',
-  '1990-2010': '1990–2010',
-  nach2010: 'nach 2010',
-};
+const baujahrLabel: Record<string, string> = { vor1970: 'vor 1970', '1970-1990': '1970–1990', '1990-2010': '1990–2010', nach2010: 'nach 2010' };
+const lbl = { fontFamily: 'var(--font-syne-var)', fontSize: '9px', letterSpacing: '0.24em', textTransform: 'uppercase' as const, color: 'var(--label-color)', display: 'block', marginBottom: '12px' };
+
+function InfoCard({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
+  return (
+    <div style={{ padding: '16px', borderRadius: '12px', border: highlight ? '1px solid rgba(222,104,24,0.35)' : '1px solid rgba(255,255,255,0.08)', backgroundColor: highlight ? 'rgba(222,104,24,0.08)' : 'rgba(255,255,255,0.03)' }}>
+      <p style={{ fontFamily: 'var(--font-syne-var)', fontSize: '9px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: '6px' }}>{label}</p>
+      <p style={{ fontFamily: 'var(--font-syne-var)', fontWeight: 600, fontSize: '13px', color: highlight ? '#f0ac24' : '#ffffff' }}>{value}</p>
+    </div>
+  );
+}
 
 export default function Step3({ data, onChange, onNext, onBack }: Step3Props) {
   const canProceed = !!data.bereitsSaniert;
-
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900 mb-1">Gebäudedaten bestätigen</h2>
-      <p className="text-gray-500 mb-6">Wir haben folgende Daten aus der TABULA-Datenbank ermittelt.</p>
+      <h2 style={{ fontFamily: 'var(--font-cormorant-var)', fontWeight: 300, fontSize: '38px', color: 'var(--text)', marginBottom: '4px', lineHeight: 1.1 }}>Gebäudedaten</h2>
+      <p style={{ fontFamily: 'var(--font-syne-var)', fontSize: '13px', color: 'var(--muted)', marginBottom: '24px' }}>Aus der TABULA-Datenbank ermittelt.</p>
 
-      <div className="grid grid-cols-2 gap-3 mb-6">
-        <InfoCard
-          label="Gebäudetyp"
-          value={`${data.propertyType === 'haus' ? 'Einfamilienhaus' : 'Mehrfamilienhaus'} (Baujahr ${baujahrLabel[data.baujahr ?? ''] ?? data.baujahr})`}
-        />
-        <InfoCard
-          label="Heizenergiebedarf"
-          value={`~${data.heizenergiebedarfKwh ?? '—'} kWh/m²/Jahr`}
-        />
-        <InfoCard
-          label="Dämmzustand"
-          value={data.daemmzustand ?? '—'}
-        />
-        <InfoCard
-          label="Energieeffizienzklasse"
-          value={data.energieeffizienzklasse ?? '—'}
-          highlight
-        />
+      <div className="grid grid-cols-2 gap-2 mb-6">
+        <InfoCard label="Gebäudetyp" value={`${data.propertyType === 'haus' ? 'Einfamilienhaus' : 'MFH'} (${baujahrLabel[data.baujahr ?? ''] ?? data.baujahr})`} />
+        <InfoCard label="Heizenergiebedarf" value={`~${data.heizenergiebedarfKwh ?? '—'} kWh/m²`} />
+        <InfoCard label="Dämmzustand" value={data.daemmzustand ?? '—'} />
+        <InfoCard label="Energieeffizienzklasse" value={data.energieeffizienzklasse ?? '—'} highlight />
       </div>
 
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-3">
-          Wurde dein Gebäude bereits teilsaniert?
-        </label>
-        <div className="grid grid-cols-3 gap-3">
-          {[
-            { label: 'Ja, teilweise', value: 'ja' as const },
-            { label: 'Nein', value: 'nein' as const },
-            { label: 'Weiß nicht', value: 'weiss_nicht' as const },
-          ].map((opt) => (
-            <button
-              key={opt.value}
-              onClick={() => onChange({ bereitsSaniert: opt.value })}
-              className={clsx(
-                'py-3 px-3 border-2 rounded-xl text-sm font-medium transition-all',
-                data.bereitsSaniert === opt.value
-                  ? 'border-green-500 bg-green-50 text-green-700'
-                  : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
+        <label style={lbl}>Wurde dein Gebäude bereits teilsaniert?</label>
+        <div className="grid grid-cols-3 gap-2">
+          {[{ label: 'Ja, teilweise', value: 'ja' as const }, { label: 'Nein', value: 'nein' as const }, { label: 'Weiß nicht', value: 'weiss_nicht' as const }].map((opt) => (
+            <button key={opt.value} onClick={() => onChange({ bereitsSaniert: opt.value })}
+              className={clsx('py-3 px-2 border rounded-xl text-sm font-medium transition-all',
+                data.bereitsSaniert === opt.value ? 'border-[#de6818] bg-[#de6818]/15 text-white' : 'border-white/10 bg-white/4 text-[#8a7868] hover:border-[#de6818]/50 hover:text-white'
               )}
-            >
+              style={{ fontFamily: 'var(--font-syne-var)', fontSize: '12px' }}>
               {opt.label}
             </button>
           ))}
@@ -72,29 +52,16 @@ export default function Step3({ data, onChange, onNext, onBack }: Step3Props) {
       </div>
 
       <div className="mt-8 flex gap-3">
-        <button
-          onClick={onBack}
-          className="py-3 px-6 border border-gray-300 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition-colors"
-        >
+        <button onClick={onBack} className="py-3 px-6 rounded-xl transition-colors"
+          style={{ fontFamily: 'var(--font-syne-var)', fontSize: '13px', fontWeight: 600, border: '1px solid rgba(255,255,255,0.12)', color: '#8a7868' }}>
           ← Zurück
         </button>
-        <button
-          onClick={onNext}
-          disabled={!canProceed}
-          className="flex-1 py-3 px-6 bg-green-500 text-white font-semibold rounded-xl disabled:opacity-40 disabled:cursor-not-allowed hover:bg-green-600 transition-colors"
-        >
+        <button onClick={onNext} disabled={!canProceed}
+          className="flex-1 py-3 px-6 rounded-xl font-semibold transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+          style={{ fontFamily: 'var(--font-syne-var)', fontSize: '13px', backgroundColor: '#de6818', color: 'white' }}>
           Weiter →
         </button>
       </div>
-    </div>
-  );
-}
-
-function InfoCard({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
-  return (
-    <div className={clsx('p-4 rounded-xl border', highlight ? 'border-green-300 bg-green-50' : 'border-gray-200 bg-gray-50')}>
-      <p className="text-xs text-gray-500 mb-1">{label}</p>
-      <p className={clsx('font-semibold text-sm', highlight ? 'text-green-700' : 'text-gray-800')}>{value}</p>
     </div>
   );
 }

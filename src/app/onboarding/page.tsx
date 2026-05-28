@@ -2,9 +2,11 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { UserProfile } from '@/lib/types';
 import { saveProfile, saveAnalysis, saveOnboardingStep } from '@/lib/localStorage';
 import { getTabulaData, getTabulaArchetype } from '@/lib/tabula';
+import ThemeToggle from '@/app/components/ThemeToggle';
 import ProgressBar from './components/ProgressBar';
 import Step1 from './components/Step1';
 import Step2 from './components/Step2';
@@ -22,128 +24,119 @@ export default function OnboardingPage() {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
-  const [profile, setProfile] = useState<Partial<UserProfile>>({
-    monatlicheKosten: 150,
-  });
+  const [profile, setProfile] = useState<Partial<UserProfile>>({ monatlicheKosten: 150 });
 
   function update(updates: Partial<UserProfile>) {
     setProfile((prev) => ({ ...prev, ...updates }));
   }
 
-  async function goToStep2() {
-    setStep(2);
-    saveOnboardingStep(2);
-  }
+  async function goToStep2() { setStep(2); saveOnboardingStep(2); }
 
   async function goToStep3() {
-    // Load TABULA data + call Brightsky in background
     if (profile.propertyType && profile.baujahr) {
       const tabula = getTabulaData(profile.propertyType, profile.baujahr);
       const archetype = getTabulaArchetype(profile.propertyType);
-      let heizenergie = tabula.heizenergiebedarfKwh;
-
-      // Fetch Brightsky data in background (non-blocking)
-      if (profile.plz) {
-        fetch(`/api/brightsky?plz=${profile.plz}`).catch(() => {});
-      }
-
+      if (profile.plz) fetch(`/api/brightsky?plz=${profile.plz}`).catch(() => {});
       update({
         tabulaArchetype: archetype,
-        heizenergiebedarfKwh: heizenergie,
+        heizenergiebedarfKwh: tabula.heizenergiebedarfKwh,
         daemmzustand: tabula.daemmzustand,
         energieeffizienzklasse: tabula.energieeffizienzklasse,
       });
     }
-    setStep(3);
-    saveOnboardingStep(3);
+    setStep(3); saveOnboardingStep(3);
   }
 
   function goToStep4() {
-    // Adjust heizenergiebedarf if already partially renovated
     if (profile.bereitsSaniert === 'ja' && profile.heizenergiebedarfKwh) {
       update({ heizenergiebedarfKwh: Math.round(profile.heizenergiebedarfKwh * 0.8) });
     }
-    setStep(4);
-    saveOnboardingStep(4);
+    setStep(4); saveOnboardingStep(4);
   }
 
-  function goToStep5() {
-    setStep(5);
-    saveOnboardingStep(5);
-  }
-
-  function goToStep6() {
-    setStep(6);
-    saveOnboardingStep(6);
-  }
+  function goToStep5() { setStep(5); saveOnboardingStep(5); }
+  function goToStep6() { setStep(6); saveOnboardingStep(6); }
 
   async function handleSubmit() {
     setSubmitting(true);
     const finalProfile = profile as UserProfile;
     saveProfile(finalProfile);
-
     try {
       const res = await fetch('/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(finalProfile),
       });
-      if (res.ok) {
-        const analysis = await res.json();
-        saveAnalysis(analysis);
-      }
-    } catch {
-      // Fehler ignorieren – Dashboard zeigt Fallback
-    }
-
+      if (res.ok) saveAnalysis(await res.json());
+    } catch { /* Dashboard zeigt Fallback */ }
     router.push('/dashboard');
   }
 
   function getStep5Component() {
     const isEigentuemer = profile.userType === 'eigentuemer';
     const isHaus = profile.propertyType === 'haus';
-
-    if (isEigentuemer && isHaus) {
-      return <Step5A data={profile} onChange={update} onNext={goToStep6} onBack={() => setStep(4)} />;
-    }
-    if (isEigentuemer && !isHaus) {
-      return <Step5B data={profile} onChange={update} onNext={goToStep6} onBack={() => setStep(4)} />;
-    }
-    if (!isEigentuemer && isHaus) {
-      return <Step5C data={profile} onChange={update} onNext={goToStep6} onBack={() => setStep(4)} />;
-    }
+    if (isEigentuemer && isHaus)  return <Step5A data={profile} onChange={update} onNext={goToStep6} onBack={() => setStep(4)} />;
+    if (isEigentuemer && !isHaus) return <Step5B data={profile} onChange={update} onNext={goToStep6} onBack={() => setStep(4)} />;
+    if (!isEigentuemer && isHaus) return <Step5C data={profile} onChange={update} onNext={goToStep6} onBack={() => setStep(4)} />;
     return <Step5D data={profile} onChange={update} onNext={goToStep6} onBack={() => setStep(4)} />;
   }
 
-  // Display step: step 5 sub-variants all count as step 5
-  const displayStep = step;
-
   return (
-    <div className="min-h-screen bg-gray-50 flex items-start justify-center pt-10 px-4">
-      <div className="w-full max-w-lg">
-        <div className="mb-6">
-          <h1 className="text-lg font-bold text-green-600">⚡ Kenergy Advisor</h1>
+    <div style={{ position: 'relative', minHeight: '100vh', backgroundColor: 'var(--bg)', color: 'var(--text)', overflowX: 'hidden' }}>
+
+      {/* Orb Layer */}
+      <div className="orb-layer" style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
+        <div style={{
+          position: 'absolute',
+          width: '800px', height: '800px',
+          right: '-180px', top: '-180px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, #c04400 0%, transparent 68%)',
+          opacity: 0.52,
+        }} />
+        <div style={{
+          position: 'absolute',
+          width: '520px', height: '520px',
+          right: '60px', top: '60px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, #e06818 0%, transparent 68%)',
+          opacity: 0.38,
+          filter: 'blur(20px)',
+        }} />
+        <div style={{
+          position: 'absolute',
+          width: '260px', height: '260px',
+          right: '240px', top: '200px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, #f5b424 0%, transparent 68%)',
+          opacity: 0.28,
+          filter: 'blur(10px)',
+        }} />
+      </div>
+
+      {/* Navigation */}
+      <nav style={{ position: 'relative', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '24px 32px' }}>
+        <Link href="/" style={{ fontFamily: 'var(--font-syne-var)', fontWeight: 600, letterSpacing: '0.22em', fontSize: '12px', color: 'var(--text)', textDecoration: 'none', textTransform: 'uppercase' }}>
+          KENERGY<span style={{ color: '#de6818' }}>·</span>
+        </Link>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <ThemeToggle />
+          <span style={{ fontFamily: 'var(--font-syne-var)', fontSize: '9px', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--muted)' }}>
+            Energie-Analyse
+          </span>
         </div>
+      </nav>
 
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          <ProgressBar currentStep={displayStep} totalSteps={TOTAL_STEPS} />
-
-          {step === 1 && (
-            <Step1 data={profile} onChange={update} onNext={goToStep2} />
-          )}
-          {step === 2 && (
-            <Step2 data={profile} onChange={update} onNext={goToStep3} onBack={() => setStep(1)} />
-          )}
-          {step === 3 && (
-            <Step3 data={profile} onChange={update} onNext={goToStep4} onBack={() => setStep(2)} />
-          )}
-          {step === 4 && (
-            <Step4 data={profile} onChange={update} onNext={goToStep5} onBack={() => setStep(3)} />
-          )}
+      {/* Form Card */}
+      <div style={{ position: 'relative', zIndex: 10, display: 'flex', justifyContent: 'center', padding: '16px 16px 64px' }}>
+        <div style={{ width: '100%', maxWidth: '520px', background: 'var(--card-bg)', border: '1px solid var(--card-border)', borderRadius: '20px', padding: '32px' }}>
+          <ProgressBar currentStep={step} totalSteps={TOTAL_STEPS} />
+          {step === 1 && <Step1 data={profile} onChange={update} onNext={goToStep2} />}
+          {step === 2 && <Step2 data={profile} onChange={update} onNext={goToStep3} onBack={() => setStep(1)} />}
+          {step === 3 && <Step3 data={profile} onChange={update} onNext={goToStep4} onBack={() => setStep(2)} />}
+          {step === 4 && <Step4 data={profile} onChange={update} onNext={goToStep5} onBack={() => setStep(3)} />}
           {step === 5 && getStep5Component()}
-          {step === 6 && (
-            <Step6 data={profile} onChange={update} onSubmit={handleSubmit} onBack={() => setStep(5)} submitting={submitting} />
-          )}
+          {step === 6 && <Step6 data={profile} onChange={update} onSubmit={handleSubmit} onBack={() => setStep(5)} submitting={submitting} />}
         </div>
       </div>
     </div>
