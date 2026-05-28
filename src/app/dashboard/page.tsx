@@ -2,22 +2,20 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { UserProfile, AnalyseResult, Massnahme } from '@/lib/types';
 import { loadProfile, loadAnalysis, saveAnalysis } from '@/lib/storage';
-import ThemeToggle from '@/app/components/ThemeToggle';
+import DashboardShell from '@/app/components/DashboardShell';
+import KpiTile from '@/app/components/KpiTile';
+import ProgressCard from '@/app/components/ProgressCard';
 import ProfilKarte from './components/ProfilKarte';
-import SparpotenzialKarte from './components/SparpotenzialKarte';
-import BudgetFilter, { BudgetOption } from './components/BudgetFilter';
-import MassnahmenTop3 from './components/MassnahmenTop3';
 import FoerderungsBadge from './components/FoerderungsBadge';
+import TopMassnahmenCards from './components/TopMassnahmenCards';
 
 export default function DashboardPage() {
   const router = useRouter();
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [analyse, setAnalyse] = useState<AnalyseResult | null>(null);
   const [loading, setLoading] = useState(true);
-  const [budget, setBudget] = useState<BudgetOption>('alle');
 
   useEffect(() => {
     async function init() {
@@ -58,107 +56,99 @@ export default function DashboardPage() {
 
   if (loading || !profile) {
     return (
-      <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '20px', position: 'relative', overflow: 'hidden' }}>
-        <div className="orb-layer" style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
-          <div style={{ position: 'absolute', width: '900px', height: '900px', right: '-200px', top: '-200px', borderRadius: '50%', background: 'radial-gradient(circle, #c04400 0%, transparent 68%)', opacity: 0.45 }} />
-        </div>
-        <div style={{ position: 'relative', zIndex: 10, textAlign: 'center' }}>
-          <div style={{ width: '36px', height: '36px', margin: '0 auto 20px', border: '2px solid rgba(222,104,24,0.25)', borderTop: '2px solid #de6818', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
-          <p style={{ fontFamily: 'var(--font-cormorant-var)', fontStyle: 'italic', fontWeight: 300, fontSize: '24px', color: 'var(--text)', marginBottom: '8px' }}>
-            Dein persönlicher Energieplan wird erstellt…
+      <DashboardShell>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', flexDirection: 'column', gap: '20px' }}>
+          <div style={{ width: '36px', height: '36px', border: '2px solid rgba(222,104,24,0.25)', borderTop: '2px solid #de6818', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+          <p style={{ fontFamily: 'var(--font-cormorant-var)', fontStyle: 'italic', fontWeight: 300, fontSize: '24px', color: 'var(--text)' }}>
+            Dein Energieplan wird erstellt…
           </p>
-          <p style={{ fontFamily: 'var(--font-syne-var)', fontSize: '12px', color: 'var(--muted)' }}>
-            Claude analysiert dein Gebäudeprofil
-          </p>
+          <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
         </div>
-        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-      </div>
+      </DashboardShell>
     );
   }
 
   if (!analyse) return null;
 
+  const jahreskosten = analyse.jahreskosten;
+  const optimierteKosten = Math.max(0, jahreskosten - analyse.maxErsparnisjahr);
+  const kostenPercent = jahreskosten > 0
+    ? Math.round((analyse.maxErsparnisjahr / jahreskosten) * 100)
+    : 0;
+
+  const co2Aktuell = analyse.jahresverbrauchKwh * 0.18;
+  const co2Optimiert = Math.max(0, co2Aktuell - analyse.co2ReduktionKgJahr);
+  const co2Percent = co2Aktuell > 0
+    ? Math.round((analyse.co2ReduktionKgJahr / co2Aktuell) * 100)
+    : 0;
+
+  const bestAmortisation = analyse.massnahmen.length > 0
+    ? Math.min(...analyse.massnahmen.map(m => m.amortisationJahre))
+    : 0;
+
   return (
-    <div style={{ position: 'relative', minHeight: '100vh', backgroundColor: 'var(--bg)', color: 'var(--text)', overflowX: 'hidden' }}>
+    <DashboardShell>
+      <div style={{ padding: '40px 40px 80px' }}>
 
-      {/* Dark orbs */}
-      <div className="orb-layer" style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
-        <div style={{ position: 'absolute', width: '900px', height: '900px', right: '-200px', top: '-200px', borderRadius: '50%', background: 'radial-gradient(circle, #c04400 0%, transparent 68%)', opacity: 0.45 }} />
-        <div style={{ position: 'absolute', width: '600px', height: '600px', right: '20px', top: '20px', borderRadius: '50%', background: 'radial-gradient(circle, #e06818 0%, transparent 68%)', opacity: 0.28, filter: 'blur(20px)' }} />
-        <div style={{ position: 'absolute', width: '340px', height: '340px', left: '-60px', bottom: '120px', borderRadius: '50%', background: 'radial-gradient(circle, #c04400 0%, transparent 68%)', opacity: 0.18, filter: 'blur(28px)' }} />
-      </div>
-
-      {/* Light orbs */}
-      <div className="orb-layer-light" style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
-        <div style={{ position: 'absolute', width: '900px', height: '900px', right: '-200px', top: '-200px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,105,25,0.5) 0%, rgba(255,105,25,0) 68%)', animation: 'orbFloat1 16s ease-in-out infinite' }} />
-        <div style={{ position: 'absolute', width: '420px', height: '420px', right: '40px', top: '60px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,158,55,0.32) 0%, rgba(255,158,55,0) 68%)', animation: 'orbFloat3 12s ease-in-out infinite' }} />
-      </div>
-
-      {/* Nav */}
-      <nav style={{ position: 'relative', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '24px 32px' }}>
-        <Link href="/" style={{ fontFamily: 'var(--font-syne-var)', fontWeight: 600, letterSpacing: '0.22em', fontSize: '12px', color: 'var(--text)', textDecoration: 'none', textTransform: 'uppercase' }}>
-          KENERGY<span style={{ color: '#de6818' }}>·</span>
-        </Link>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <ThemeToggle />
-          <span style={{ fontFamily: 'var(--font-syne-var)', fontSize: '9px', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--muted)' }}>
-            Dashboard
-          </span>
-        </div>
-      </nav>
-
-      {/* Content */}
-      <div style={{ position: 'relative', zIndex: 10, maxWidth: '760px', margin: '0 auto', padding: '8px 16px 80px' }}>
-
-        {/* Header */}
+        {/* Page header */}
         <div style={{ marginBottom: '32px' }}>
-          <p style={{ fontFamily: 'var(--font-syne-var)', fontSize: '9px', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--label-color)', marginBottom: '8px' }}>
+          <p style={{ fontFamily: 'var(--font-syne-var)', fontSize: '9px', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--label-color)', marginBottom: '6px' }}>
             Dein Energieplan
           </p>
-          <h1 style={{ fontFamily: 'var(--font-cormorant-var)', fontWeight: 300, fontSize: '42px', lineHeight: 1.1, color: 'var(--text)' }}>
+          <h1 style={{ fontFamily: 'var(--font-cormorant-var)', fontWeight: 300, fontSize: '38px', lineHeight: 1.1, color: 'var(--text)' }}>
             Bereit zum <em style={{ color: '#de6818' }}>Sparen.</em>
           </h1>
         </div>
 
-        {/* Sparpotenzial — prominent */}
-        <div style={{ marginBottom: '16px' }}>
-          <SparpotenzialKarte analyse={analyse} />
+        {/* Row 1: KPI tiles */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '16px' }}>
+          <KpiTile
+            label="Sparpotenzial"
+            value={`€${analyse.maxErsparnisjahr.toLocaleString('de-DE')}`}
+            subtext="pro Jahr"
+            accent="#de6818"
+          />
+          <KpiTile
+            label="CO₂-Reduktion"
+            value={`${analyse.co2ReduktionKgJahr.toLocaleString('de-DE')} kg`}
+            subtext="pro Jahr"
+            accent="#4ade80"
+          />
+          <KpiTile
+            label="Schnellste Amortisation"
+            value={`${bestAmortisation} Jahre`}
+            subtext="bis zur Rentabilität"
+          />
         </div>
 
-        {/* Profil + Förderungen */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px', marginBottom: '16px' }}
-          className="md:grid-cols-5-custom">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px' }}
-            className="grid grid-cols-1 md:grid-cols-[3fr_2fr]">
-            <ProfilKarte profile={profile} analyse={analyse} />
-            <FoerderungsBadge foerderungsIds={analyse.qualifiziertefoerderungen ?? []} />
-          </div>
+        {/* Row 2: Progress cards */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+          <ProgressCard
+            label="Jahreskosten"
+            currentLabel={`${jahreskosten.toLocaleString('de-DE')} €`}
+            optimisedLabel={`${optimierteKosten.toLocaleString('de-DE')} €`}
+            percent={kostenPercent}
+            accent="#de6818"
+          />
+          <ProgressCard
+            label="CO₂-Jahresausstoß"
+            currentLabel={`${Math.round(co2Aktuell).toLocaleString('de-DE')} kg`}
+            optimisedLabel={`${Math.round(co2Optimiert).toLocaleString('de-DE')} kg`}
+            percent={co2Percent}
+            accent="#4ade80"
+          />
         </div>
 
-        {/* Budget + Maßnahmen */}
-        <div style={{ background: 'var(--card-bg)', border: '1px solid var(--card-border)', borderRadius: '20px', padding: '28px' }}>
-          <div style={{ marginBottom: '24px' }}>
-            <BudgetFilter active={budget} onChange={setBudget} />
-          </div>
-          <MassnahmenTop3 massnahmen={analyse.massnahmen} ziel={profile.goal} budget={budget} />
+        {/* Row 3: Profil + Förderungen */}
+        <div style={{ display: 'grid', gridTemplateColumns: '3fr 2fr', gap: '16px', marginBottom: '16px' }}>
+          <ProfilKarte profile={profile} analyse={analyse} />
+          <FoerderungsBadge foerderungsIds={analyse.qualifiziertefoerderungen ?? []} />
         </div>
 
-        {/* Bottom links */}
-        <div style={{ marginTop: '28px', display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          {[
-            { href: '/chat', label: 'KI-Berater fragen' },
-            { href: '/massnahmen', label: 'Alle Maßnahmen' },
-            { href: '/foerderungen', label: 'Förderungen' },
-          ].map(({ href, label }) => (
-            <Link key={href} href={href} style={{ fontFamily: 'var(--font-syne-var)', fontSize: '11px', letterSpacing: '0.1em', color: 'var(--muted)', textDecoration: 'none', border: '1px solid var(--divider)', borderRadius: '100px', padding: '10px 18px', transition: 'border-color 0.2s, color 0.2s' }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(222,104,24,0.4)'; (e.currentTarget as HTMLAnchorElement).style.color = 'var(--text)'; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--divider)'; (e.currentTarget as HTMLAnchorElement).style.color = 'var(--muted)'; }}>
-              {label} →
-            </Link>
-          ))}
-        </div>
+        {/* Row 4: Top 3 measures */}
+        <TopMassnahmenCards massnahmen={analyse.massnahmen} />
       </div>
-    </div>
+    </DashboardShell>
   );
 }
 
