@@ -88,16 +88,16 @@ export default function OnboardingPage() {
       <div className="orb-layer" style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
         <div style={{
           position: 'absolute',
-          width: '800px', height: '800px',
-          right: '-180px', top: '-180px',
+          width: '1060px', height: '1060px',
+          right: '-240px', top: '-240px',
           borderRadius: '50%',
           background: 'radial-gradient(circle, #c04400 0%, transparent 68%)',
-          opacity: 0.52,
+          opacity: 0.55,
         }} />
         <div style={{
           position: 'absolute',
-          width: '520px', height: '520px',
-          right: '60px', top: '60px',
+          width: '680px', height: '680px',
+          right: '40px', top: '40px',
           borderRadius: '50%',
           background: 'radial-gradient(circle, #e06818 0%, transparent 68%)',
           opacity: 0.38,
@@ -105,8 +105,8 @@ export default function OnboardingPage() {
         }} />
         <div style={{
           position: 'absolute',
-          width: '260px', height: '260px',
-          right: '240px', top: '200px',
+          width: '380px', height: '380px',
+          right: '220px', top: '180px',
           borderRadius: '50%',
           background: 'radial-gradient(circle, #f5b424 0%, transparent 68%)',
           opacity: 0.28,
@@ -118,28 +118,19 @@ export default function OnboardingPage() {
       <div className="orb-layer-light" style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
         <div style={{
           position: 'absolute',
-          width: '820px', height: '820px',
-          right: '-200px', top: '-200px',
+          width: '1060px', height: '1060px',
+          right: '-240px', top: '-240px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(232,64,48,0.55) 0%, rgba(232,64,48,0) 68%)',
+          background: 'radial-gradient(circle, rgba(255,105,25,0.58) 0%, rgba(255,105,25,0) 68%)',
           willChange: 'transform',
           animation: 'orbFloat1 16s ease-in-out infinite',
         }} />
         <div style={{
           position: 'absolute',
-          width: '520px', height: '520px',
-          left: '-100px', bottom: '-100px',
+          width: '480px', height: '480px',
+          right: '60px', top: '80px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(240,96,64,0.40) 0%, rgba(240,96,64,0) 68%)',
-          willChange: 'transform',
-          animation: 'orbFloat2 20s ease-in-out infinite',
-        }} />
-        <div style={{
-          position: 'absolute',
-          width: '300px', height: '300px',
-          right: '90px', top: '80px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(248,144,106,0.35) 0%, rgba(248,144,106,0) 68%)',
+          background: 'radial-gradient(circle, rgba(255,158,55,0.38) 0%, rgba(255,158,55,0) 68%)',
           willChange: 'transform',
           animation: 'orbFloat3 12s ease-in-out infinite',
         }} />
