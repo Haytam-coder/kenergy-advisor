@@ -132,19 +132,21 @@ export default function LandingPage() {
               background: 'var(--card-bg)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: '17px',
-              transition: 'background 0.4s, border-color 0.4s, box-shadow 0.4s',
+              transition: 'background 0.4s, border-color 0.4s, box-shadow 0.4s, transform 0.35s ease',
             }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLDivElement;
                 el.style.background = 'rgba(240,172,36,0.12)';
                 el.style.borderColor = 'rgba(240,172,36,0.45)';
                 el.style.boxShadow = '0 0 36px rgba(220,100,24,0.22)';
+                el.style.transform = 'scale(1.22)';
               }}
               onMouseLeave={(e) => {
                 const el = e.currentTarget as HTMLDivElement;
                 el.style.background = 'var(--card-bg)';
                 el.style.borderColor = 'var(--divider)';
                 el.style.boxShadow = 'none';
+                el.style.transform = 'scale(1)';
               }}
             >→</div>
             Analyse beginnen
@@ -179,6 +181,22 @@ export default function LandingPage() {
                 transitionDelay: `${i * 0.1}s`,
                 position: 'relative',
                 overflow: 'hidden',
+                transition: 'transform 0.4s ease, box-shadow 0.4s ease',
+                cursor: 'default',
+              }}
+              onMouseEnter={(e) => {
+                const el = e.currentTarget as HTMLDivElement;
+                el.style.transitionDelay = '0s';
+                el.style.transform = 'scale(1.06)';
+                el.style.boxShadow = '0 12px 40px rgba(0,0,0,0.12)';
+                el.style.zIndex = '2';
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget as HTMLDivElement;
+                el.style.transitionDelay = '0s';
+                el.style.transform = 'scale(1)';
+                el.style.boxShadow = 'none';
+                el.style.zIndex = '0';
               }}
             >
               <div style={{ fontFamily: 'var(--font-cormorant-var)', fontSize: '80px', fontStyle: 'italic', fontWeight: 300, lineHeight: 1, color: 'var(--subtle)', marginBottom: '36px' }}>
