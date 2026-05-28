@@ -37,7 +37,7 @@ export default function LandingPage() {
 
       {/* ── Orb Layer ── */}
       <div className="orb-layer" style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
-        {/* o1 – sehr groß, dunkel-orange, oben rechts */}
+        {/* o1 – sehr groß, dunkel-orange */}
         <div style={{
           position: 'absolute',
           width: '1060px', height: '1060px',
@@ -45,6 +45,9 @@ export default function LandingPage() {
           borderRadius: '50%',
           background: 'radial-gradient(circle, #c04400 0%, transparent 68%)',
           opacity: 0.55,
+          willChange: 'transform',
+          animation: 'ambientDrift1 4s ease-in-out infinite',
+          animationDelay: '-1s',
         }} />
         {/* o2 – groß, helles Orange */}
         <div style={{
@@ -55,8 +58,11 @@ export default function LandingPage() {
           background: 'radial-gradient(circle, #e06818 0%, transparent 68%)',
           opacity: 0.38,
           filter: 'blur(20px)',
+          willChange: 'transform',
+          animation: 'ambientDrift2 5s ease-in-out infinite',
+          animationDelay: '-2s',
         }} />
-        {/* o3 – mittel, Gold, Kern */}
+        {/* o3 – mittel, Gold */}
         <div style={{
           position: 'absolute',
           width: '380px', height: '380px',
@@ -65,6 +71,9 @@ export default function LandingPage() {
           background: 'radial-gradient(circle, #f5b424 0%, transparent 68%)',
           opacity: 0.28,
           filter: 'blur(10px)',
+          willChange: 'transform',
+          animation: 'ambientDrift3 3s ease-in-out infinite',
+          animationDelay: '-1s',
         }} />
       </div>
 
@@ -78,7 +87,8 @@ export default function LandingPage() {
           borderRadius: '50%',
           background: 'radial-gradient(circle, rgba(255,105,25,0.58) 0%, rgba(255,105,25,0) 68%)',
           willChange: 'transform',
-          animation: 'orbFloat1 16s ease-in-out infinite',
+          animation: 'ambientDrift1 5s ease-in-out infinite',
+          animationDelay: '-1s',
         }} />
         {/* Orb 2 – mittel, goldenes Orange, Kern */}
         <div style={{
@@ -88,7 +98,8 @@ export default function LandingPage() {
           borderRadius: '50%',
           background: 'radial-gradient(circle, rgba(255,158,55,0.38) 0%, rgba(255,158,55,0) 68%)',
           willChange: 'transform',
-          animation: 'orbFloat3 12s ease-in-out infinite',
+          animation: 'ambientDrift4 4s ease-in-out infinite',
+          animationDelay: '-1s',
         }} />
       </div>
 
