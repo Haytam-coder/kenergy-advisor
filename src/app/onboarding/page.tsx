@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { UserProfile } from '@/lib/types';
-import { saveProfile, saveAnalysis, saveOnboardingStep } from '@/lib/localStorage';
+import { saveProfile, saveAnalysis, saveOnboardingStep } from '@/lib/storage';
 import { getTabulaData, getTabulaArchetype } from '@/lib/tabula';
 import ThemeToggle from '@/app/components/ThemeToggle';
 import ProgressBar from './components/ProgressBar';
@@ -60,14 +60,14 @@ export default function OnboardingPage() {
   async function handleSubmit() {
     setSubmitting(true);
     const finalProfile = profile as UserProfile;
-    saveProfile(finalProfile);
+    await saveProfile(finalProfile);
     try {
       const res = await fetch('/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(finalProfile),
       });
-      if (res.ok) saveAnalysis(await res.json());
+      if (res.ok) await saveAnalysis(await res.json());
     } catch { /* Dashboard zeigt Fallback */ }
     router.push('/dashboard');
   }

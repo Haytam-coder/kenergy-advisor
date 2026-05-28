@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { UserProfile, AnalyseResult, Massnahme } from '@/lib/types';
-import { loadProfile, loadAnalysis, saveAnalysis } from '@/lib/localStorage';
+import { loadProfile, loadAnalysis, saveAnalysis } from '@/lib/storage';
 import ThemeToggle from '@/app/components/ThemeToggle';
 import ProfilKarte from './components/ProfilKarte';
 import SparpotenzialKarte from './components/SparpotenzialKarte';
@@ -20,22 +20,40 @@ export default function DashboardPage() {
   const [budget, setBudget] = useState<BudgetOption>('alle');
 
   useEffect(() => {
-    const p = loadProfile();
-    if (!p) { router.push('/onboarding'); return; }
-    setProfile(p);
+    async function init() {
+      const p = await loadProfile();
+      if (!p) { router.push('/onboarding'); return; }
+      setProfile(p);
 
-    const cached = loadAnalysis();
-    if (cached) { setAnalyse(cached); setLoading(false); return; }
+      const cached = await loadAnalysis();
+      const cacheValid = cached &&
+        cached.jahresverbrauchKwh > 0 &&
+        cached.maxErsparnisjahr > 0 &&
+        Array.isArray(cached.massnahmen) &&
+        cached.massnahmen.length > 0;
 
-    fetch('/api/analyze', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(p),
-    })
-      .then((r) => r.json())
-      .then((data: AnalyseResult) => { saveAnalysis(data); setAnalyse(data); })
-      .catch(() => { const fb = buildFallback(p); saveAnalysis(fb); setAnalyse(fb); })
-      .finally(() => setLoading(false));
+      if (cacheValid) { setAnalyse(cached!); setLoading(false); return; }
+
+      try {
+        const r = await fetch('/api/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(p),
+        });
+        if (!r.ok) throw new Error('API error');
+        const data: AnalyseResult = await r.json();
+        if (!data.jahresverbrauchKwh || !data.maxErsparnisjahr) throw new Error('Invalid response');
+        await saveAnalysis(data);
+        setAnalyse(data);
+      } catch {
+        const fb = buildFallback(p);
+        await saveAnalysis(fb);
+        setAnalyse(fb);
+      } finally {
+        setLoading(false);
+      }
+    }
+    init();
   }, [router]);
 
   if (loading || !profile) {

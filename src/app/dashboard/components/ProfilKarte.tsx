@@ -105,7 +105,7 @@ export default function ProfilKarte({ profile, analyse }: Props) {
             fontWeight: 300,
             color: 'var(--text)',
           }}>
-            {analyse.jahresverbrauchKwh.toLocaleString('de-DE')}
+            {(analyse.jahresverbrauchKwh ?? 0).toLocaleString('de-DE')}
             <span style={{ fontSize: '13px', color: 'var(--muted)', marginLeft: '4px' }}>kWh</span>
           </span>
         </div>
@@ -117,7 +117,7 @@ export default function ProfilKarte({ profile, analyse }: Props) {
             fontWeight: 300,
             color: 'var(--text)',
           }}>
-            {analyse.jahreskosten.toLocaleString('de-DE')}
+            {(analyse.jahreskosten ?? 0).toLocaleString('de-DE')}
             <span style={{ fontSize: '13px', color: 'var(--muted)', marginLeft: '4px' }}>€</span>
           </span>
         </div>

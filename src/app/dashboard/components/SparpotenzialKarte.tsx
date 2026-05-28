@@ -17,7 +17,9 @@ const lbl: React.CSSProperties = {
 };
 
 export default function SparpotenzialKarte({ analyse }: Props) {
-  const autofahrten = Math.round(analyse.co2ReduktionKgJahr / 200);
+  const ersparnis = analyse.maxErsparnisjahr ?? 0;
+  const co2Jahr = analyse.co2ReduktionKgJahr ?? 0;
+  const autofahrten = Math.round(co2Jahr / 200);
 
   return (
     <div style={{
@@ -48,7 +50,7 @@ export default function SparpotenzialKarte({ analyse }: Props) {
           lineHeight: 1,
           color: '#de6818',
         }}>
-          bis zu €{analyse.maxErsparnisjahr.toLocaleString('de-DE')}
+          bis zu €{ersparnis.toLocaleString('de-DE')}
         </span>
         <span style={{
           fontFamily: 'var(--font-syne-var)',
@@ -70,7 +72,7 @@ export default function SparpotenzialKarte({ analyse }: Props) {
       }}>
         Das entspricht{' '}
         <strong style={{ color: 'var(--text)', opacity: 1 }}>
-          {analyse.co2ReduktionKgJahr.toLocaleString('de-DE')} kg CO₂
+          {co2Jahr.toLocaleString('de-DE')} kg CO₂
         </strong>{' '}
         weniger pro Jahr.
       </p>

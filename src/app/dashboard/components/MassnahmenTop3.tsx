@@ -38,7 +38,8 @@ function budgetMax(b: BudgetOption): number {
 export default function MassnahmenTop3({ massnahmen, ziel, budget }: Props) {
   const max = budgetMax(budget);
 
-  const filtered = massnahmen.filter((m) => m.kostenschaetzung.min <= max);
+  const safeMassnahmen = massnahmen ?? [];
+  const filtered = safeMassnahmen.filter((m) => (m.kostenschaetzung?.min ?? 0) <= max);
 
   const sorted = [...filtered].sort((a, b) => {
     if (ziel === 'geld') return b.ersparnisjahr - a.ersparnisjahr;
@@ -157,7 +158,7 @@ export default function MassnahmenTop3({ massnahmen, ziel, budget }: Props) {
                   fontSize: '18px',
                   color: '#de6818',
                 }}>
-                  €{m.ersparnisjahr.toLocaleString('de-DE')}
+                  €{(m.ersparnisjahr ?? 0).toLocaleString('de-DE')}
                 </span>
               </div>
               <div>
@@ -167,7 +168,7 @@ export default function MassnahmenTop3({ massnahmen, ziel, budget }: Props) {
                   fontSize: '18px',
                   color: 'var(--text)',
                 }}>
-                  €{m.kostenschaetzung.min.toLocaleString('de-DE')}
+                  €{(m.kostenschaetzung?.min ?? 0).toLocaleString('de-DE')}
                   <span style={{ fontSize: '13px', color: 'var(--muted)' }}>+</span>
                 </span>
               </div>

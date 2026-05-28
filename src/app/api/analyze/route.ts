@@ -72,6 +72,20 @@ Wichtige Regeln:
 
     const text = response.choices[0].message.content ?? '{}';
     const result = JSON.parse(text);
+
+    // Validate critical fields — if zeroed out or missing, the model didn't follow the format
+    const valid =
+      result.jahresverbrauchKwh > 0 &&
+      result.jahreskosten > 0 &&
+      result.maxErsparnisjahr > 0 &&
+      Array.isArray(result.massnahmen) &&
+      result.massnahmen.length > 0;
+
+    if (!valid) {
+      console.error('analyze: invalid/empty response from model', result);
+      return NextResponse.json({ error: 'Ungültige Analyse' }, { status: 500 });
+    }
+
     return NextResponse.json(result);
   } catch (error) {
     console.error('analyze error:', error);
