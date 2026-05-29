@@ -16,7 +16,16 @@ export default function FoerderungenPage() {
       const p = await loadProfile();
       if (!p) { router.push('/onboarding'); return; }
       const a = await loadAnalysis();
-      setFoerderungsIds(a?.qualifiziertefoerderungen ?? []);
+
+      // Derive IDs from profile as ground truth — AI-returned IDs are unreliable
+      const profileIds = p.userType === 'eigentuemer'
+        ? ['kfw-261', 'bafa-beg', 'stromanbieter-wechsel']
+        : ['stromanbieter-wechsel'];
+
+      // Use AI IDs if they match known keys, otherwise fall back to profile-derived IDs
+      const KNOWN = new Set(Object.keys(FOERDER_PROGRAMME));
+      const aiIds = (a?.qualifiziertefoerderungen ?? []).filter(id => KNOWN.has(id));
+      setFoerderungsIds(aiIds.length > 0 ? aiIds : profileIds);
       setLoading(false);
     }
     init();
@@ -33,11 +42,7 @@ export default function FoerderungenPage() {
     );
   }
 
-  const KNOWN_IDS = Object.keys(FOERDER_PROGRAMME);
-  const normIds = foerderungsIds.length > 0
-    ? foerderungsIds.map(id => KNOWN_IDS.find(k => id.toLowerCase().includes(k) || k.includes(id.toLowerCase())) ?? id)
-    : [];
-  const programmes = normIds
+  const programmes = foerderungsIds
     .map(id => FOERDER_PROGRAMME[id])
     .filter(Boolean);
 
