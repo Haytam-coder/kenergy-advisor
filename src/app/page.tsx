@@ -404,19 +404,34 @@ export default function LandingPage() {
       </section>
 
       {/* ── Stats ── */}
-      <div className="fade-in" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', borderTop: '1px solid var(--divider)', borderBottom: '1px solid var(--divider)' }}>
+      <div className="fade-in" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', borderTop: '1px solid var(--divider)', borderBottom: '1px solid var(--divider)', position: 'relative', zIndex: 1 }}>
         {[
-          { value: '6', sup: '', label: 'Schritte' },
-          { value: '~5', sup: 'Min', label: 'Dauer' },
-          { value: '0', sup: '€', label: 'Kosten' },
+          {
+            value: '6', sup: '',
+            label: 'Fragen',
+            desc: 'Kurze, gezielte Fragen zu deinem Gebäude – kein langes Formular, keine Registrierung.',
+          },
+          {
+            value: '~5', sup: 'Min',
+            label: 'Bis zum Ergebnis',
+            desc: 'In weniger als 5 Minuten hast du deinen personalisierten KI-Sparplan – sofort und kostenlos.',
+          },
+          {
+            value: '500', sup: '€+',
+            label: 'Ø Ersparnis / Jahr',
+            desc: 'Haushalte, die unsere Top-3-Maßnahmen umsetzen, sparen im Schnitt über 500 € pro Jahr.',
+          },
         ].map((s, i) => (
-          <div key={s.label} style={{ padding: '96px 48px', borderRight: i < 2 ? '1px solid var(--divider)' : 'none' }}>
-            <div style={{ fontFamily: 'var(--font-inter-var)', fontSize: '82px', fontStyle: 'italic', fontWeight: 400, lineHeight: 1, color: 'var(--text)', marginBottom: '14px' }}>
-              {s.value}{s.sup && <sup style={{ fontSize: '38px', fontStyle: 'normal', verticalAlign: 'super' }}>{s.sup}</sup>}
+          <div key={s.label} style={{ padding: '72px 48px', borderRight: i < 2 ? '1px solid var(--divider)' : 'none' }}>
+            <div style={{ fontFamily: 'var(--font-cormorant-var)', fontSize: '82px', fontWeight: 700, lineHeight: 1, color: 'var(--text)', marginBottom: '16px' }}>
+              {s.value}{s.sup && <sup style={{ fontSize: '36px', fontWeight: 700, verticalAlign: 'super' }}>{s.sup}</sup>}
             </div>
-            <div className="section-overline">
+            <div style={{ fontFamily: 'var(--font-syne-var)', fontSize: '10px', fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#de6818', marginBottom: '14px' }}>
               {s.label}
             </div>
+            <p style={{ fontFamily: 'var(--font-syne-var)', fontSize: '13px', color: 'var(--muted)', lineHeight: 1.7, maxWidth: '260px' }}>
+              {s.desc}
+            </p>
           </div>
         ))}
       </div>
