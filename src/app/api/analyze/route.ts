@@ -61,6 +61,7 @@ Wichtige Regeln:
 - Alle Zahlen sollen realistisch und für Deutschland korrekt sein
 - Priorisierung nach Nutzerziel: ${profile.goal}
 - Mindestens 5, maximal 10 Maßnahmen
+- qualifiziertefoerderungen darf NUR diese exakten IDs enthalten (keine anderen Strings): "kfw-261", "bafa-beg", "stromanbieter-wechsel"
 - Antworte NUR mit dem JSON-Objekt, kein zusätzlicher Text`;
 
     const response = await openai.chat.completions.create({

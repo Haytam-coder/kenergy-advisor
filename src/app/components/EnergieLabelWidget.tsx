@@ -1,9 +1,9 @@
-const LABELS = ['A+++', 'A++', 'A+', 'A', 'B', 'C', 'D', 'E', 'F', 'G'];
+const LABELS = ['A+++', 'A++', 'A+', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
 const LABEL_COLORS: Record<string, string> = {
   'A+++': '#00A651', 'A++': '#4CB748', 'A+': '#8DC640', 'A': '#C8D400',
   'B': '#F5E600', 'C': '#F5B400', 'D': '#EF7D00', 'E': '#E63027',
-  'F': '#BC1622', 'G': '#9B0E15',
+  'F': '#BC1622', 'G': '#9B0E15', 'H': '#6B0A10',
 };
 
 function improveLabel(label: string, steps: number): string {

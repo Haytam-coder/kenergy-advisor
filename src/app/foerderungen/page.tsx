@@ -33,7 +33,11 @@ export default function FoerderungenPage() {
     );
   }
 
-  const programmes = foerderungsIds
+  const KNOWN_IDS = Object.keys(FOERDER_PROGRAMME);
+  const normIds = foerderungsIds.length > 0
+    ? foerderungsIds.map(id => KNOWN_IDS.find(k => id.toLowerCase().includes(k) || k.includes(id.toLowerCase())) ?? id)
+    : [];
+  const programmes = normIds
     .map(id => FOERDER_PROGRAMME[id])
     .filter(Boolean);
 
