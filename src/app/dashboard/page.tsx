@@ -137,7 +137,7 @@ export default function DashboardPage() {
         Array.isArray(cached.massnahmen) &&
         cached.massnahmen.length > 0;
 
-      if (cacheValid) { setAnalyse(cached!); setLoading(false); startScore(cached!); return; }
+      if (cacheValid) { setAnalyse(cached!); setLoading(false); startScore(p.energieeffizienzklasse ?? 'D'); return; }
 
       try {
         const r = await fetch('/api/analyze', {
@@ -150,12 +150,12 @@ export default function DashboardPage() {
         if (!data.jahresverbrauchKwh || !data.maxErsparnisjahr) throw new Error('Invalid response');
         await saveAnalysis(data);
         setAnalyse(data);
-        startScore(data);
+        startScore(p.energieeffizienzklasse ?? 'D');
       } catch {
         const fb = buildFallback(p);
         await saveAnalysis(fb);
         setAnalyse(fb);
-        startScore(fb);
+        startScore(p.energieeffizienzklasse ?? 'D');
       } finally {
         setLoading(false);
       }
@@ -163,8 +163,8 @@ export default function DashboardPage() {
     init();
   }, [router]);
 
-  function startScore(data: AnalyseResult) {
-    const target = energieeffizienzToScore(data.energieeffizienzklasse ?? 'D');
+  function startScore(klasse: string) {
+    const target = energieeffizienzToScore(klasse);
     setPhase('phase1');
     setTimeout(() => setPopStyle({ transform: 'scale(1.08)', opacity: 1, transition: 'transform 400ms cubic-bezier(0.34,1.56,0.64,1), opacity 300ms ease' }), 50);
     setTimeout(() => setPopStyle({ transform: 'scale(1)', opacity: 1, transition: 'transform 200ms ease-out' }), 450);
