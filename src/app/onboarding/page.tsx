@@ -17,8 +17,9 @@ import Step5B from './components/Step5B';
 import Step5C from './components/Step5C';
 import Step5D from './components/Step5D';
 import Step6 from './components/Step6';
+import ProfilZusammenfassung from './components/ProfilZusammenfassung';
 
-const TOTAL_STEPS = 6;
+const TOTAL_STEPS = 7;
 
 export default function OnboardingPage() {
   const router = useRouter();
@@ -56,6 +57,7 @@ export default function OnboardingPage() {
 
   function goToStep5() { setStep(5); saveOnboardingStep(5); }
   function goToStep6() { setStep(6); saveOnboardingStep(6); }
+  function goToStep7() { setStep(7); saveOnboardingStep(7); }
 
   async function handleSubmit() {
     setSubmitting(true);
@@ -169,7 +171,8 @@ export default function OnboardingPage() {
           {step === 3 && <Step3 data={profile} onChange={update} onNext={goToStep4} onBack={() => setStep(2)} />}
           {step === 4 && <Step4 data={profile} onChange={update} onNext={goToStep5} onBack={() => setStep(3)} />}
           {step === 5 && getStep5Component()}
-          {step === 6 && <Step6 data={profile} onChange={update} onSubmit={handleSubmit} onBack={() => setStep(5)} submitting={submitting} />}
+          {step === 6 && <Step6 data={profile} onChange={update} onSubmit={goToStep7} onBack={() => setStep(5)} submitting={submitting} />}
+          {step === 7 && <ProfilZusammenfassung data={profile} onSubmit={handleSubmit} onBack={() => setStep(6)} submitting={submitting} />}
         </div>
       </div>
     </div>

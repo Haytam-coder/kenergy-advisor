@@ -142,3 +142,16 @@ body {
   100% { transform: translate(0px, 0px) scale(1); }
 }
 
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.no-print {}
+
+@media print {
+  aside, .no-print { display: none !important; }
+  main { margin-left: 0 !important; }
+  body { background: white !important; color: black !important; }
+}
+

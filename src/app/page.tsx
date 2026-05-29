@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import ThemeToggle from './components/ThemeToggle';
 
@@ -22,7 +22,15 @@ const features = [
   },
 ];
 
+interface LiveStats {
+  analysesCount: number;
+  totalErsparnis: number;
+  totalCo2Kg: number;
+}
+
 export default function LandingPage() {
+  const [liveStats, setLiveStats] = useState<LiveStats | null>(null);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add('visible')),
@@ -30,6 +38,10 @@ export default function LandingPage() {
     );
     document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    fetch('/api/stats').then(r => r.json()).then(setLiveStats).catch(() => {});
   }, []);
 
   return (
@@ -241,6 +253,23 @@ export default function LandingPage() {
           </div>
         ))}
       </div>
+
+      {/* ── Live Stats ── */}
+      {liveStats && liveStats.analysesCount > 0 && (
+        <div className="fade-in" style={{ position: 'relative', zIndex: 1, padding: '48px 64px', borderTop: '1px solid var(--divider)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
+          <span style={{ fontFamily: 'var(--font-syne-var)', fontSize: '11px', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--muted)' }}>
+            <span style={{ color: '#4ade80', fontWeight: 600 }}>{liveStats.analysesCount}</span> Haushalte analysiert
+          </span>
+          <span style={{ color: 'var(--divider)', fontSize: '18px' }}>·</span>
+          <span style={{ fontFamily: 'var(--font-syne-var)', fontSize: '11px', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--muted)' }}>
+            <span style={{ color: '#de6818', fontWeight: 600 }}>{liveStats.totalErsparnis.toLocaleString('de-DE')} €</span> Sparpotenzial berechnet
+          </span>
+          <span style={{ color: 'var(--divider)', fontSize: '18px' }}>·</span>
+          <span style={{ fontFamily: 'var(--font-syne-var)', fontSize: '11px', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--muted)' }}>
+            <span style={{ color: '#4ade80', fontWeight: 600 }}>{Math.round(liveStats.totalCo2Kg / 1000).toLocaleString('de-DE')} t</span> CO₂ identifiziert
+          </span>
+        </div>
+      )}
 
       {/* ── Footer CTA ── */}
       <section className="fade-in" style={{ position: 'relative', zIndex: 1, padding: '160px 32px', textAlign: 'center', borderTop: '1px solid var(--divider)' }}>

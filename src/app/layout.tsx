@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Syne, Cormorant_Garamond } from 'next/font/google';
 import './globals.css';
+import ToastProvider from './components/ToastProvider';
 
 const syne = Syne({
   subsets: ['latin'],
@@ -33,7 +34,7 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: `try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}` }} />
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col"><ToastProvider>{children}</ToastProvider></body>
     </html>
   );
 }

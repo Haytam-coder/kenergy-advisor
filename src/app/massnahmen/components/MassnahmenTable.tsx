@@ -5,6 +5,7 @@ import { Massnahme } from '@/lib/types';
 import { BudgetOption } from '@/app/dashboard/components/BudgetFilter';
 import { KategorieOption } from './KategorieFilter';
 import { KATEGORIE_ICON, KATEGORIE_LABEL } from '../constants';
+import PrioritaetsScore from '@/app/components/PrioritaetsScore';
 
 interface Props {
   massnahmen: Massnahme[];
@@ -91,7 +92,10 @@ export default function MassnahmenTable({ massnahmen, budget, kategorie }: Props
             </td>
 
             <td style={{ padding: '14px 16px', fontFamily: 'var(--font-syne-var)', fontSize: '12px', color: 'var(--text)', whiteSpace: 'nowrap' }}>
-              {m.amortisationJahre === 0 ? '—' : `${m.amortisationJahre} Jahre`}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                {m.amortisationJahre === 0 ? '—' : `${m.amortisationJahre} Jahre`}
+                <PrioritaetsScore amortisationJahre={m.amortisationJahre} size="sm" />
+              </div>
             </td>
 
             <td style={{ padding: '14px 16px' }}>

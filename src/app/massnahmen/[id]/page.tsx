@@ -8,6 +8,9 @@ import { loadProfile, loadAnalysis } from '@/lib/storage';
 import DashboardShell from '@/app/components/DashboardShell';
 import KpiTile from '@/app/components/KpiTile';
 import { KATEGORIE_ICON } from '@/app/massnahmen/constants';
+import AmortisationsRechner from '@/app/components/AmortisationsRechner';
+import PrioritaetsScore from '@/app/components/PrioritaetsScore';
+import HandwerkerForm from '@/app/components/HandwerkerForm';
 
 export default function MassnahmeDetailPage() {
   const router = useRouter();
@@ -79,10 +82,13 @@ export default function MassnahmeDetailPage() {
 
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', marginBottom: '28px' }}>
           <span style={{ fontSize: '36px', flexShrink: 0 }}>{KATEGORIE_ICON[massnahme.kategorie] ?? '⚡'}</span>
-          <div>
-            <h1 style={{ fontFamily: 'var(--font-cormorant-var)', fontWeight: 300, fontSize: '36px', lineHeight: 1.1, color: 'var(--text)', marginBottom: '8px' }}>
-              {massnahme.titel}
-            </h1>
+          <div style={{ flex: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
+              <h1 style={{ fontFamily: 'var(--font-cormorant-var)', fontWeight: 300, fontSize: '36px', lineHeight: 1.1, color: 'var(--text)' }}>
+                {massnahme.titel}
+              </h1>
+              <PrioritaetsScore amortisationJahre={massnahme.amortisationJahre} size="lg" />
+            </div>
             <p style={{ fontFamily: 'var(--font-syne-var)', fontSize: '13px', color: 'var(--muted)', lineHeight: 1.6 }}>
               {massnahme.beschreibung}
             </p>
@@ -97,6 +103,12 @@ export default function MassnahmeDetailPage() {
             value={massnahme.amortisationJahre === 0 ? 'Sofort' : `${massnahme.amortisationJahre} Jahre`}
           />
         </div>
+
+        <AmortisationsRechner
+          ersparnisjahr={massnahme.ersparnisjahr}
+          kostenMin={massnahme.kostenschaetzung.min}
+          kostenMax={massnahme.kostenschaetzung.max}
+        />
 
         <div style={{
           background: 'rgba(74,222,128,0.06)',
@@ -142,29 +154,7 @@ export default function MassnahmeDetailPage() {
         )}
 
         {massnahme.kenergy_referral && (
-          <a
-            href="https://kenergy-solutions.de"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: 'block',
-              textAlign: 'center',
-              padding: '16px',
-              background: '#de6818',
-              color: 'white',
-              borderRadius: '14px',
-              fontFamily: 'var(--font-syne-var)',
-              fontSize: '13px',
-              fontWeight: 600,
-              letterSpacing: '0.06em',
-              textDecoration: 'none',
-              transition: 'background 0.2s',
-            }}
-            onMouseEnter={e => (e.currentTarget.style.background = '#b84200')}
-            onMouseLeave={e => (e.currentTarget.style.background = '#de6818')}
-          >
-            Kostenloses Angebot von Kenergy →
-          </a>
+          <HandwerkerForm massnahmeId={massnahme.id} massnahmeTitel={massnahme.titel} />
         )}
       </div>
     </DashboardShell>

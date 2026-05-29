@@ -10,6 +10,8 @@ import ProgressCard from '@/app/components/ProgressCard';
 import ProfilKarte from './components/ProfilKarte';
 import FoerderungsBadge from './components/FoerderungsBadge';
 import TopMassnahmenCards from './components/TopMassnahmenCards';
+import LoadingSteps from '@/app/components/LoadingSteps';
+import EnergieLabelWidget from '@/app/components/EnergieLabelWidget';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -57,12 +59,8 @@ export default function DashboardPage() {
   if (loading || !profile) {
     return (
       <DashboardShell>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', flexDirection: 'column', gap: '20px' }}>
-          <div style={{ width: '36px', height: '36px', border: '2px solid rgba(222,104,24,0.25)', borderTop: '2px solid #de6818', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
-          <p style={{ fontFamily: 'var(--font-cormorant-var)', fontStyle: 'italic', fontWeight: 300, fontSize: '24px', color: 'var(--text)' }}>
-            Dein Energieplan wird erstellt…
-          </p>
-          <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+          <LoadingSteps />
         </div>
       </DashboardShell>
     );
@@ -91,13 +89,36 @@ export default function DashboardPage() {
       <div style={{ padding: '40px 40px 80px' }}>
 
         {/* Page header */}
-        <div style={{ marginBottom: '32px' }}>
-          <p style={{ fontFamily: 'var(--font-syne-var)', fontSize: '9px', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--label-color)', marginBottom: '6px' }}>
-            Dein Energieplan
-          </p>
-          <h1 style={{ fontFamily: 'var(--font-cormorant-var)', fontWeight: 300, fontSize: '38px', lineHeight: 1.1, color: 'var(--text)' }}>
-            Bereit zum <em style={{ color: '#de6818' }}>Sparen.</em>
-          </h1>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '32px' }}>
+          <div>
+            <p style={{ fontFamily: 'var(--font-syne-var)', fontSize: '9px', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--label-color)', marginBottom: '6px' }}>
+              Dein Energieplan
+            </p>
+            <h1 style={{ fontFamily: 'var(--font-cormorant-var)', fontWeight: 300, fontSize: '38px', lineHeight: 1.1, color: 'var(--text)' }}>
+              Bereit zum <em style={{ color: '#de6818' }}>Sparen.</em>
+            </h1>
+          </div>
+          <button
+            className="no-print"
+            onClick={() => window.print()}
+            style={{
+              marginTop: '8px',
+              padding: '10px 18px',
+              background: 'var(--card-bg)',
+              border: '1px solid var(--card-border)',
+              borderRadius: '10px',
+              fontFamily: 'var(--font-syne-var)',
+              fontSize: '11px',
+              letterSpacing: '0.1em',
+              color: 'var(--muted)',
+              cursor: 'pointer',
+              transition: 'color 0.2s, border-color 0.2s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.color = 'var(--text)'; e.currentTarget.style.borderColor = 'var(--divider)'; }}
+            onMouseLeave={e => { e.currentTarget.style.color = 'var(--muted)'; e.currentTarget.style.borderColor = 'var(--card-border)'; }}
+          >
+            ⎙ PDF / Drucken
+          </button>
         </div>
 
         {/* Row 1: KPI tiles */}
@@ -139,10 +160,18 @@ export default function DashboardPage() {
           />
         </div>
 
-        {/* Row 3: Profil + Förderungen */}
+        {/* Row 2.5: Energie-Label + Förderungen */}
         <div style={{ display: 'grid', gridTemplateColumns: '3fr 2fr', gap: '16px', marginBottom: '16px' }}>
-          <ProfilKarte profile={profile} analyse={analyse} />
+          <EnergieLabelWidget
+            currentLabel={profile.energieeffizienzklasse ?? 'D'}
+            improvableMassnahmenCount={analyse.massnahmen.filter(m => ['heizung', 'daemmung', 'solar'].includes(m.kategorie)).length}
+          />
           <FoerderungsBadge foerderungsIds={analyse.qualifiziertefoerderungen ?? []} />
+        </div>
+
+        {/* Row 3: Profil */}
+        <div style={{ marginBottom: '16px' }}>
+          <ProfilKarte profile={profile} analyse={analyse} />
         </div>
 
         {/* Row 4: Top 3 measures */}
