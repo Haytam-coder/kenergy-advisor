@@ -151,12 +151,12 @@ export default function OnboardingPage() {
 
       {/* Navigation */}
       <nav style={{ position: 'relative', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '24px 32px' }}>
-        <Link href="/" style={{ fontFamily: 'var(--font-syne-var)', fontWeight: 600, letterSpacing: '0.22em', fontSize: '12px', color: 'var(--text)', textDecoration: 'none', textTransform: 'uppercase' }}>
+        <Link href="/" style={{ fontFamily: 'var(--font-inter-var)', fontWeight: 600, letterSpacing: '0.22em', fontSize: '12px', color: 'var(--text)', textDecoration: 'none', textTransform: 'uppercase' }}>
           KENERGY<span style={{ color: '#de6818' }}>·</span>
         </Link>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <ThemeToggle />
-          <span style={{ fontFamily: 'var(--font-syne-var)', fontSize: '9px', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--muted)' }}>
+          <span style={{ fontFamily: 'var(--font-inter-var)', fontSize: '9px', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'var(--muted)' }}>
             Energie-Analyse
           </span>
         </div>

@@ -25,7 +25,7 @@ const warmwasserOptions: { label: string; value: UserProfile['warmwasser'] }[] =
   { label: '☀️ Solar', value: 'solar' },
 ];
 
-const lbl = { fontFamily: 'var(--font-syne-var)', fontSize: '9px', letterSpacing: '0.24em', textTransform: 'uppercase' as const, color: 'var(--label-color)', display: 'block', marginBottom: '12px' };
+const lbl = { fontFamily: 'var(--font-inter-var)', fontSize: '12px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: 'var(--label-color)', display: 'block', marginBottom: '10px' };
 
 export default function Step4({ data, onChange, onNext, onBack }: Step4Props) {
   const [uploading, setUploading] = useState(false);
@@ -53,8 +53,8 @@ export default function Step4({ data, onChange, onNext, onBack }: Step4Props) {
 
   return (
     <div>
-      <h2 style={{ fontFamily: 'var(--font-cormorant-var)', fontWeight: 300, fontSize: '38px', color: 'var(--text)', marginBottom: '4px', lineHeight: 1.1 }}>Energie & Kosten</h2>
-      <p style={{ fontFamily: 'var(--font-syne-var)', fontSize: '13px', color: 'var(--muted)', marginBottom: '28px' }}>Dein aktueller Energiemix.</p>
+      <h2 style={{ fontFamily: 'var(--font-inter-var)', fontWeight: 400, fontSize: '44px', color: 'var(--text)', marginBottom: '6px', lineHeight: 1 }}>Energie & Kosten</h2>
+      <p style={{ fontFamily: 'var(--font-inter-var)', fontSize: '16px', lineHeight: 1.7, color: 'var(--muted)', marginBottom: '28px' }}>Dein aktueller Energiemix.</p>
 
       <div className="space-y-6">
         <div>
@@ -66,7 +66,7 @@ export default function Step4({ data, onChange, onNext, onBack }: Step4Props) {
                   data.heizungstyp === opt.value ? 'border-[#de6818] bg-[#de6818]/15 text-white' : 'border-white/10 bg-white/4 text-[#8a7868] hover:border-[#de6818]/50 hover:text-white'
                 )}>
                 <div className="text-2xl mb-1">{opt.icon}</div>
-                <div style={{ fontFamily: 'var(--font-syne-var)', fontSize: '11px', fontWeight: 500 }}>{opt.label}</div>
+                <div style={{ fontFamily: 'var(--font-inter-var)', fontSize: '11px', fontWeight: 500 }}>{opt.label}</div>
               </button>
             ))}
           </div>
@@ -80,7 +80,7 @@ export default function Step4({ data, onChange, onNext, onBack }: Step4Props) {
                 className={clsx('py-3 px-2 border rounded-xl text-sm font-medium transition-all',
                   data.warmwasser === opt.value ? 'border-[#de6818] bg-[#de6818]/15 text-white' : 'border-white/10 bg-white/4 text-[#8a7868] hover:border-[#de6818]/50 hover:text-white'
                 )}
-                style={{ fontFamily: 'var(--font-syne-var)', fontSize: '12px' }}>
+                style={{ fontFamily: 'var(--font-inter-var)', fontSize: '12px' }}>
                 {opt.label}
               </button>
             ))}
@@ -94,7 +94,7 @@ export default function Step4({ data, onChange, onNext, onBack }: Step4Props) {
           <input type="range" min={50} max={500} step={10} value={data.monatlicheKosten ?? 150}
             onChange={(e) => onChange({ monatlicheKosten: parseInt(e.target.value) })}
             className="w-full accent-[#de6818]" />
-          <div className="flex justify-between mt-1" style={{ fontFamily: 'var(--font-syne-var)', fontSize: '10px', color: 'var(--subtle)' }}>
+          <div className="flex justify-between mt-1" style={{ fontFamily: 'var(--font-inter-var)', fontSize: '10px', color: 'var(--subtle)' }}>
             <span>€50</span><span>€500</span>
           </div>
         </div>
@@ -107,17 +107,17 @@ export default function Step4({ data, onChange, onNext, onBack }: Step4Props) {
             onMouseLeave={(e) => { (e.currentTarget as HTMLLabelElement).style.borderColor = 'var(--divider)'; }}>
             <span className="text-xl">📄</span>
             <div>
-              <p style={{ fontFamily: 'var(--font-syne-var)', fontSize: '12px', fontWeight: 500, color: 'var(--text)' }}>PDF, JPG oder PNG</p>
-              <p style={{ fontFamily: 'var(--font-syne-var)', fontSize: '11px', color: 'var(--muted)' }}>KI liest automatisch deinen kWh-Verbrauch</p>
+              <p style={{ fontFamily: 'var(--font-inter-var)', fontSize: '12px', fontWeight: 500, color: 'var(--text)' }}>PDF, JPG oder PNG</p>
+              <p style={{ fontFamily: 'var(--font-inter-var)', fontSize: '11px', color: 'var(--muted)' }}>KI liest automatisch deinen kWh-Verbrauch</p>
             </div>
             <input type="file" accept=".pdf,.jpg,.jpeg,.png" onChange={handleFileUpload} className="hidden" disabled={uploading} />
           </label>
-          {uploadStatus && <p style={{ fontFamily: 'var(--font-syne-var)', fontSize: '12px', color: 'var(--muted)', marginTop: '8px' }}>{uploadStatus}</p>}
+          {uploadStatus && <p style={{ fontFamily: 'var(--font-inter-var)', fontSize: '12px', color: 'var(--muted)', marginTop: '8px' }}>{uploadStatus}</p>}
           {data.stromverbrauchKwh && (
             <div className="mt-2 flex items-center gap-2">
-              <label style={{ fontFamily: 'var(--font-syne-var)', fontSize: '12px', color: 'var(--muted)' }}>Manuell:</label>
+              <label style={{ fontFamily: 'var(--font-inter-var)', fontSize: '12px', color: 'var(--muted)' }}>Manuell:</label>
               <input type="number" value={data.stromverbrauchKwh} onChange={(e) => onChange({ stromverbrauchKwh: parseInt(e.target.value) || undefined })} placeholder="kWh/Jahr"
-                style={{ fontFamily: 'var(--font-syne-var)', fontSize: '12px', color: 'var(--text)', backgroundColor: 'var(--input-bg)', border: '1px solid var(--input-border)', borderRadius: '8px', padding: '6px 12px', width: '120px', outline: 'none' }} />
+                style={{ fontFamily: 'var(--font-inter-var)', fontSize: '12px', color: 'var(--text)', backgroundColor: 'var(--input-bg)', border: '1px solid var(--input-border)', borderRadius: '8px', padding: '6px 12px', width: '120px', outline: 'none' }} />
             </div>
           )}
         </div>
@@ -125,12 +125,12 @@ export default function Step4({ data, onChange, onNext, onBack }: Step4Props) {
 
       <div className="mt-8 flex gap-3">
         <button onClick={onBack} className="py-3 px-6 rounded-xl transition-colors"
-          style={{ fontFamily: 'var(--font-syne-var)', fontSize: '13px', fontWeight: 600, border: '1px solid var(--divider)', color: 'var(--muted)' }}>
+          style={{ fontFamily: 'var(--font-inter-var)', fontSize: '14px', fontWeight: 600, border: '1px solid var(--divider)', color: 'var(--muted)' }}>
           ← Zurück
         </button>
         <button onClick={onNext} disabled={!canProceed}
           className="flex-1 py-3 px-6 rounded-xl font-semibold transition-all disabled:opacity-30 disabled:cursor-not-allowed"
-          style={{ fontFamily: 'var(--font-syne-var)', fontSize: '13px', backgroundColor: '#de6818', color: 'white' }}>
+          style={{ fontFamily: 'var(--font-inter-var)', fontSize: '14px', backgroundColor: '#de6818', color: 'white' }}>
           Weiter →
         </button>
       </div>

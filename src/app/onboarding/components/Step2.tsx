@@ -10,8 +10,8 @@ interface Step2Props {
   onBack: () => void;
 }
 
-const lbl = { fontFamily: 'var(--font-syne-var)', fontSize: '9px', letterSpacing: '0.24em', textTransform: 'uppercase' as const, color: 'var(--label-color)', display: 'block', marginBottom: '12px' };
-const inputSt: React.CSSProperties = { fontFamily: 'var(--font-syne-var)', fontSize: '14px', color: 'var(--text)', backgroundColor: 'var(--input-bg)', border: '1px solid var(--input-border)', borderRadius: '12px', padding: '12px 16px', width: '100%', outline: 'none', transition: 'border-color 0.2s' };
+const lbl = { fontFamily: 'var(--font-inter-var)', fontSize: '12px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: 'var(--label-color)', display: 'block', marginBottom: '10px' };
+const inputSt: React.CSSProperties = { fontFamily: 'var(--font-inter-var)', fontSize: '14px', color: 'var(--text)', backgroundColor: 'var(--input-bg)', border: '1px solid var(--input-border)', borderRadius: '12px', padding: '12px 16px', width: '100%', outline: 'none', transition: 'border-color 0.2s' };
 
 export default function Step2({ data, onChange, onNext, onBack }: Step2Props) {
   const baujahrValid = data.baujahr && Number(data.baujahr) >= 1800 && Number(data.baujahr) <= new Date().getFullYear();
@@ -19,8 +19,8 @@ export default function Step2({ data, onChange, onNext, onBack }: Step2Props) {
 
   return (
     <div>
-      <h2 style={{ fontFamily: 'var(--font-cormorant-var)', fontWeight: 300, fontSize: '38px', color: 'var(--text)', marginBottom: '4px', lineHeight: 1.1 }}>Dein Gebäude</h2>
-      <p style={{ fontFamily: 'var(--font-syne-var)', fontSize: '13px', color: 'var(--muted)', marginBottom: '28px' }}>Ein paar technische Eckdaten für die Analyse.</p>
+      <h2 style={{ fontFamily: 'var(--font-inter-var)', fontWeight: 400, fontSize: '44px', color: 'var(--text)', marginBottom: '6px', lineHeight: 1 }}>Dein Gebäude</h2>
+      <p style={{ fontFamily: 'var(--font-inter-var)', fontSize: '16px', lineHeight: 1.7, color: 'var(--muted)', marginBottom: '28px' }}>Ein paar technische Eckdaten für die Analyse.</p>
 
       <div className="space-y-6">
         <div>
@@ -45,7 +45,7 @@ export default function Step2({ data, onChange, onNext, onBack }: Step2Props) {
             onFocus={(e) => { e.target.style.borderColor = 'rgba(222,104,24,0.5)'; }}
             onBlur={(e) => { e.target.style.borderColor = 'var(--input-border)'; }}
           />
-          <p style={{ fontFamily: 'var(--font-syne-var)', fontSize: '11px', color: 'var(--muted)', marginTop: '6px' }}>
+          <p style={{ fontFamily: 'var(--font-inter-var)', fontSize: '11px', color: 'var(--muted)', marginTop: '6px' }}>
             Ungefähres Baujahr – präzise Zuordnung zum TABULA-Archetyp
           </p>
         </div>
@@ -67,7 +67,7 @@ export default function Step2({ data, onChange, onNext, onBack }: Step2Props) {
                 className={clsx('py-3 border rounded-xl font-medium transition-all',
                   data.personen === n ? 'border-[#de6818] bg-[#de6818]/15 text-white' : 'border-white/10 bg-white/4 text-[#8a7868] hover:border-[#de6818]/50 hover:text-white'
                 )}
-                style={{ fontFamily: 'var(--font-syne-var)', fontSize: '14px' }}>
+                style={{ fontFamily: 'var(--font-inter-var)', fontSize: '14px' }}>
                 {n === 4 ? '4+' : n}
               </button>
             ))}
@@ -77,12 +77,12 @@ export default function Step2({ data, onChange, onNext, onBack }: Step2Props) {
 
       <div className="mt-8 flex gap-3">
         <button onClick={onBack} className="py-3 px-6 rounded-xl transition-colors"
-          style={{ fontFamily: 'var(--font-syne-var)', fontSize: '13px', fontWeight: 600, border: '1px solid var(--divider)', color: 'var(--muted)' }}>
+          style={{ fontFamily: 'var(--font-inter-var)', fontSize: '14px', fontWeight: 600, border: '1px solid var(--divider)', color: 'var(--muted)' }}>
           ← Zurück
         </button>
         <button onClick={onNext} disabled={!canProceed}
           className="flex-1 py-3 px-6 rounded-xl font-semibold transition-all disabled:opacity-30 disabled:cursor-not-allowed"
-          style={{ fontFamily: 'var(--font-syne-var)', fontSize: '13px', backgroundColor: '#de6818', color: 'white' }}>
+          style={{ fontFamily: 'var(--font-inter-var)', fontSize: '14px', backgroundColor: '#de6818', color: 'white' }}>
           Weiter →
         </button>
       </div>

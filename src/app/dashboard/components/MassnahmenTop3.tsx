@@ -21,8 +21,9 @@ const kategorieLabel: Record<string, string> = {
 };
 
 const lbl: React.CSSProperties = {
-  fontFamily: 'var(--font-syne-var)',
-  fontSize: '9px',
+  fontFamily: 'var(--font-inter-var)',
+  fontSize: '10px',
+  fontWeight: 600,
   letterSpacing: '0.28em',
   textTransform: 'uppercase',
   color: 'var(--label-color)',
@@ -52,7 +53,7 @@ export default function MassnahmenTop3({ massnahmen, ziel, budget }: Props) {
   if (top3.length === 0) {
     return (
       <div style={{ textAlign: 'center', padding: '32px 0' }}>
-        <p style={{ fontFamily: 'var(--font-syne-var)', fontSize: '13px', color: 'var(--muted)' }}>
+        <p style={{ fontFamily: 'var(--font-inter-var)', fontSize: '13px', color: 'var(--muted)' }}>
           Keine Maßnahmen für dieses Budget gefunden.
         </p>
       </div>
@@ -77,9 +78,9 @@ export default function MassnahmenTop3({ massnahmen, ziel, budget }: Props) {
               position: 'absolute',
               top: '20px',
               right: '20px',
-              fontFamily: 'var(--font-cormorant-var)',
+              fontFamily: 'var(--font-inter-var)',
               fontSize: '32px',
-              fontWeight: 300,
+              fontWeight: 400,
               color: 'var(--card-border)',
               lineHeight: 1,
             }}>
@@ -89,7 +90,7 @@ export default function MassnahmenTop3({ massnahmen, ziel, budget }: Props) {
             {/* Tags row */}
             <div style={{ display: 'flex', gap: '6px', marginBottom: '10px', flexWrap: 'wrap' }}>
               <span style={{
-                fontFamily: 'var(--font-syne-var)',
+                fontFamily: 'var(--font-inter-var)',
                 fontSize: '9px',
                 letterSpacing: '0.2em',
                 textTransform: 'uppercase',
@@ -103,7 +104,7 @@ export default function MassnahmenTop3({ massnahmen, ziel, budget }: Props) {
               </span>
               {m.foerderungVerfuegbar && (
                 <span style={{
-                  fontFamily: 'var(--font-syne-var)',
+                  fontFamily: 'var(--font-inter-var)',
                   fontSize: '9px',
                   letterSpacing: '0.2em',
                   textTransform: 'uppercase',
@@ -120,9 +121,11 @@ export default function MassnahmenTop3({ massnahmen, ziel, budget }: Props) {
 
             {/* Title */}
             <h3 style={{
-              fontFamily: 'var(--font-cormorant-var)',
-              fontWeight: 400,
-              fontSize: '22px',
+              fontFamily: 'var(--font-inter-var)',
+              fontSize: '13px',
+              fontWeight: 600,
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase' as const,
               color: 'var(--text)',
               marginBottom: '8px',
               lineHeight: 1.2,
@@ -133,7 +136,7 @@ export default function MassnahmenTop3({ massnahmen, ziel, budget }: Props) {
 
             {/* Description */}
             <p style={{
-              fontFamily: 'var(--font-syne-var)',
+              fontFamily: 'var(--font-inter-var)',
               fontSize: '12px',
               color: 'var(--muted)',
               lineHeight: 1.6,
@@ -154,7 +157,7 @@ export default function MassnahmenTop3({ massnahmen, ziel, budget }: Props) {
               <div>
                 <span style={{ ...lbl, marginBottom: '2px', fontSize: '8px' }}>Ersparnis/Jahr</span>
                 <span style={{
-                  fontFamily: 'var(--font-cormorant-var)',
+                  fontFamily: 'var(--font-inter-var)',
                   fontSize: '18px',
                   color: '#de6818',
                 }}>
@@ -164,7 +167,7 @@ export default function MassnahmenTop3({ massnahmen, ziel, budget }: Props) {
               <div>
                 <span style={{ ...lbl, marginBottom: '2px', fontSize: '8px' }}>Kosten</span>
                 <span style={{
-                  fontFamily: 'var(--font-cormorant-var)',
+                  fontFamily: 'var(--font-inter-var)',
                   fontSize: '18px',
                   color: 'var(--text)',
                 }}>
@@ -175,7 +178,7 @@ export default function MassnahmenTop3({ massnahmen, ziel, budget }: Props) {
               <div>
                 <span style={{ ...lbl, marginBottom: '2px', fontSize: '8px' }}>Amortisation</span>
                 <span style={{
-                  fontFamily: 'var(--font-cormorant-var)',
+                  fontFamily: 'var(--font-inter-var)',
                   fontSize: '18px',
                   color: 'var(--text)',
                 }}>
@@ -198,7 +201,7 @@ export default function MassnahmenTop3({ massnahmen, ziel, budget }: Props) {
                   background: '#de6818',
                   color: 'white',
                   borderRadius: '12px',
-                  fontFamily: 'var(--font-syne-var)',
+                  fontFamily: 'var(--font-inter-var)',
                   fontSize: '12px',
                   fontWeight: 600,
                   letterSpacing: '0.06em',
@@ -217,7 +220,7 @@ export default function MassnahmenTop3({ massnahmen, ziel, budget }: Props) {
 
       <div style={{ marginTop: '16px', textAlign: 'center' }}>
         <Link href="/massnahmen" style={{
-          fontFamily: 'var(--font-syne-var)',
+          fontFamily: 'var(--font-inter-var)',
           fontSize: '11px',
           letterSpacing: '0.14em',
           textTransform: 'uppercase',

@@ -29,7 +29,7 @@ export default function ThemeToggle() {
         borderRadius: '100px',
         padding: '8px 16px',
         color: 'var(--muted)',
-        fontFamily: 'var(--font-syne-var)',
+        fontFamily: 'var(--font-inter-var)',
         fontSize: '10px',
         letterSpacing: '0.16em',
         textTransform: 'uppercase',

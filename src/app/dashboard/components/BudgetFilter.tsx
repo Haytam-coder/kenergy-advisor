@@ -15,8 +15,9 @@ const options: { label: string; value: BudgetOption }[] = [
 ];
 
 const lbl: React.CSSProperties = {
-  fontFamily: 'var(--font-syne-var)',
-  fontSize: '9px',
+  fontFamily: 'var(--font-inter-var)',
+  fontSize: '10px',
+  fontWeight: 600,
   letterSpacing: '0.28em',
   textTransform: 'uppercase',
   color: 'var(--label-color)',
@@ -36,7 +37,7 @@ export default function BudgetFilter({ active, onChange }: Props) {
               key={opt.value}
               onClick={() => onChange(opt.value)}
               style={{
-                fontFamily: 'var(--font-syne-var)',
+                fontFamily: 'var(--font-inter-var)',
                 fontSize: '12px',
                 letterSpacing: '0.04em',
                 padding: '8px 16px',

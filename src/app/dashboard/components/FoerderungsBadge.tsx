@@ -7,8 +7,9 @@ interface Props {
 }
 
 const lbl: React.CSSProperties = {
-  fontFamily: 'var(--font-syne-var)',
-  fontSize: '9px',
+  fontFamily: 'var(--font-inter-var)',
+  fontSize: '10px',
+  fontWeight: 600,
   letterSpacing: '0.28em',
   textTransform: 'uppercase',
   color: 'var(--label-color)',
@@ -32,8 +33,8 @@ export default function FoerderungsBadge({ foerderungsIds }: Props) {
         <div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', marginBottom: '4px' }}>
             <span style={{
-              fontFamily: 'var(--font-cormorant-var)',
-              fontWeight: 300,
+              fontFamily: 'var(--font-inter-var)',
+              fontWeight: 400,
               fontSize: '48px',
               lineHeight: 1,
               color: '#de6818',
@@ -41,7 +42,7 @@ export default function FoerderungsBadge({ foerderungsIds }: Props) {
               {count}
             </span>
             <span style={{
-              fontFamily: 'var(--font-syne-var)',
+              fontFamily: 'var(--font-inter-var)',
               fontSize: '13px',
               color: 'var(--text)',
               opacity: 0.7,
@@ -50,7 +51,7 @@ export default function FoerderungsBadge({ foerderungsIds }: Props) {
             </span>
           </div>
           <p style={{
-            fontFamily: 'var(--font-syne-var)',
+            fontFamily: 'var(--font-inter-var)',
             fontSize: '12px',
             color: 'var(--muted)',
             lineHeight: 1.5,
@@ -61,7 +62,7 @@ export default function FoerderungsBadge({ foerderungsIds }: Props) {
 
         <Link href="/foerderungen" style={{
           flexShrink: 0,
-          fontFamily: 'var(--font-syne-var)',
+          fontFamily: 'var(--font-inter-var)',
           fontSize: '11px',
           letterSpacing: '0.1em',
           color: 'var(--muted)',

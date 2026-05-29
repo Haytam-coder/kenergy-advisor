@@ -1,7 +1,16 @@
 import type { Metadata } from 'next';
-import { Syne, Cormorant_Garamond } from 'next/font/google';
+import { Inter, Syne, Cormorant_Garamond } from 'next/font/google';
 import './globals.css';
 import ToastProvider from './components/ToastProvider';
+import ChatPanel from './components/ChatPanel';
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  style: ['normal', 'italic'],
+  variable: '--font-inter-var',
+  display: 'swap',
+});
 
 const syne = Syne({
   subsets: ['latin'],
@@ -29,12 +38,16 @@ export default function RootLayout({
   return (
     <html
       lang="de"
-      className={`${syne.variable} ${cormorant.variable} h-full antialiased`}
+      className={`${inter.variable} ${syne.variable} ${cormorant.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: `try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}` }} />
       </head>
-      <body className="min-h-full flex flex-col"><ToastProvider>{children}</ToastProvider></body>
+      <body className="min-h-full flex flex-col">
+        <ToastProvider>{children}</ToastProvider>
+        <ChatPanel />
+      </body>
     </html>
   );
 }

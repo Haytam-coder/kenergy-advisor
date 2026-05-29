@@ -9,8 +9,9 @@ interface Props {
 }
 
 const lbl: React.CSSProperties = {
-  fontFamily: 'var(--font-syne-var)',
-  fontSize: '9px',
+  fontFamily: 'var(--font-inter-var)',
+  fontSize: '10px',
+  fontWeight: 600,
   letterSpacing: '0.28em',
   textTransform: 'uppercase',
   color: 'var(--label-color)',
@@ -44,7 +45,7 @@ export default function ProfilKarte({ profile, analyse }: Props) {
 
       <div style={{ marginBottom: '20px' }}>
         <h2 style={{
-          fontFamily: 'var(--font-cormorant-var)',
+          fontFamily: 'var(--font-inter-var)',
           fontWeight: 300,
           fontSize: '28px',
           color: 'var(--text)',
@@ -56,7 +57,7 @@ export default function ProfilKarte({ profile, analyse }: Props) {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
           <span style={{
-            fontFamily: 'var(--font-syne-var)',
+            fontFamily: 'var(--font-inter-var)',
             fontSize: '12px',
             color: 'var(--muted)',
           }}>
@@ -64,7 +65,7 @@ export default function ProfilKarte({ profile, analyse }: Props) {
           </span>
           <span style={{ color: 'var(--divider)' }}>·</span>
           <span style={{
-            fontFamily: 'var(--font-syne-var)',
+            fontFamily: 'var(--font-inter-var)',
             fontSize: '12px',
             color: 'var(--muted)',
           }}>
@@ -79,7 +80,7 @@ export default function ProfilKarte({ profile, analyse }: Props) {
             border: `1px solid ${color}55`,
             borderRadius: '100px',
             padding: '3px 10px',
-            fontFamily: 'var(--font-syne-var)',
+            fontFamily: 'var(--font-inter-var)',
             fontSize: '11px',
             fontWeight: 600,
             color: color,
@@ -100,9 +101,9 @@ export default function ProfilKarte({ profile, analyse }: Props) {
         <div>
           <span style={{ ...lbl, marginBottom: '4px' }}>Jahresverbrauch</span>
           <span style={{
-            fontFamily: 'var(--font-cormorant-var)',
+            fontFamily: 'var(--font-inter-var)',
             fontSize: '22px',
-            fontWeight: 300,
+            fontWeight: 400,
             color: 'var(--text)',
           }}>
             {(analyse.jahresverbrauchKwh ?? 0).toLocaleString('de-DE')}
@@ -112,9 +113,9 @@ export default function ProfilKarte({ profile, analyse }: Props) {
         <div>
           <span style={{ ...lbl, marginBottom: '4px' }}>Jahreskosten</span>
           <span style={{
-            fontFamily: 'var(--font-cormorant-var)',
+            fontFamily: 'var(--font-inter-var)',
             fontSize: '22px',
-            fontWeight: 300,
+            fontWeight: 400,
             color: 'var(--text)',
           }}>
             {(analyse.jahreskosten ?? 0).toLocaleString('de-DE')}
@@ -126,7 +127,7 @@ export default function ProfilKarte({ profile, analyse }: Props) {
       {profile.daemmzustand && (
         <div style={{ marginTop: '16px' }}>
           <span style={{
-            fontFamily: 'var(--font-syne-var)',
+            fontFamily: 'var(--font-inter-var)',
             fontSize: '11px',
             color: 'var(--muted)',
             background: 'var(--input-bg)',

@@ -10,10 +10,10 @@ export default function ProgressBar({ currentStep, totalSteps }: ProgressBarProp
   return (
     <div style={{ width: '100%', marginBottom: '32px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-        <span style={{ fontFamily: 'var(--font-syne-var)', fontSize: '9px', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--muted)' }}>
+        <span style={{ fontFamily: 'var(--font-inter-var)', fontSize: '9px', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--muted)' }}>
           Schritt {currentStep} von {totalSteps}
         </span>
-        <span style={{ fontFamily: 'var(--font-syne-var)', fontSize: '10px', fontWeight: 600, color: '#f0ac24' }}>
+        <span style={{ fontFamily: 'var(--font-inter-var)', fontSize: '10px', fontWeight: 600, color: '#f0ac24' }}>
           {percent} %
         </span>
       </div>

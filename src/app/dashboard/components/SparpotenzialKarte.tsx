@@ -7,8 +7,9 @@ interface Props {
 }
 
 const lbl: React.CSSProperties = {
-  fontFamily: 'var(--font-syne-var)',
-  fontSize: '9px',
+  fontFamily: 'var(--font-inter-var)',
+  fontSize: '10px',
+  fontWeight: 600,
   letterSpacing: '0.28em',
   textTransform: 'uppercase',
   color: 'var(--label-color)',
@@ -43,9 +44,9 @@ export default function SparpotenzialKarte({ analyse }: Props) {
 
       <div style={{ marginBottom: '8px' }}>
         <span style={{
-          fontFamily: 'var(--font-cormorant-var)',
+          fontFamily: 'var(--font-inter-var)',
           fontStyle: 'italic',
-          fontWeight: 300,
+          fontWeight: 400,
           fontSize: '48px',
           lineHeight: 1,
           color: '#de6818',
@@ -53,7 +54,7 @@ export default function SparpotenzialKarte({ analyse }: Props) {
           bis zu €{ersparnis.toLocaleString('de-DE')}
         </span>
         <span style={{
-          fontFamily: 'var(--font-syne-var)',
+          fontFamily: 'var(--font-inter-var)',
           fontSize: '13px',
           color: 'var(--muted)',
           marginLeft: '8px',
@@ -63,7 +64,7 @@ export default function SparpotenzialKarte({ analyse }: Props) {
       </div>
 
       <p style={{
-        fontFamily: 'var(--font-syne-var)',
+        fontFamily: 'var(--font-inter-var)',
         fontSize: '13px',
         color: 'var(--text)',
         opacity: 0.75,
@@ -86,7 +87,7 @@ export default function SparpotenzialKarte({ analyse }: Props) {
       }}>
         <span style={{ fontSize: '18px' }}>🚗</span>
         <span style={{
-          fontFamily: 'var(--font-syne-var)',
+          fontFamily: 'var(--font-inter-var)',
           fontSize: '12px',
           color: 'var(--muted)',
         }}>
@@ -97,7 +98,7 @@ export default function SparpotenzialKarte({ analyse }: Props) {
       {analyse.kurzfazit && (
         <p style={{
           marginTop: '16px',
-          fontFamily: 'var(--font-syne-var)',
+          fontFamily: 'var(--font-inter-var)',
           fontSize: '12px',
           fontStyle: 'italic',
           color: 'var(--muted)',
